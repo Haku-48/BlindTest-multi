@@ -13,3 +13,26 @@ function handleRoomCreation(socket : Socket) {
         }
     })
 }
+
+/* Listen the join request from a socket on the server */
+function handleJoinRoom(socket : Socket, io : Server) {
+    socket.on('joinRoom', (playerPseudo, roomId, callback) => {
+        if (playerPseudo && playerPseudo.length > 2) {
+            var roomIdResult = roomManager.joinRoom(socket, playerPseudo, roomId);
+            if (roomIdResult) {
+                io.to(roomIdResult).emit("playerJoined", playerPseudo);
+                socket.join(roomId);
+                callback({success: true, roomIdResult});
+            } else {
+                callback({success: false, error: 'Inexistant or already playing room'})
+            }
+        } else {
+            callback({success: false, error: 'Invalid pseudo'})
+        }
+    })
+}
+
+export = {
+    handleRoomCreation : handleRoomCreation,
+    handleJoinRoom : handleJoinRoom
+}

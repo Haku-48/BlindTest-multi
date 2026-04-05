@@ -1,25 +1,24 @@
 /* This file will contains all the types useful for the server and the client */
 
 /* Room type */
-interface Room {
+export interface Room {
     id : string,
     hostId : string,
     settings : [string],
     players : [Player],
     status : GameStatus,
-    rounds : [Round]
+    rounds : [Round] | null
 }
 
 /* Player type */
-interface Player {
-    id : string,
+export interface Player {
     pseudo : string,
     score : number,
     socketId : string
 }
 
 /* Round type */
-interface Round {
+export interface Round {
     submitterId : string,
     videoId : string,
     startSec : number,
@@ -29,10 +28,10 @@ interface Round {
 }
 
 /* Guess type */
-type Guess = [Player, string];
+export type Guess = [Player, string];
 
 /* GameStatus type */
-type GameStatus = 'WAITING' | 'CHOOSING' | 'PLAYING' | 'CORRECTION' | 'END';
+export type GameStatus = 'WAITING' | 'CHOOSING' | 'PLAYING' | 'CORRECTION' | 'END';
 
 /* RoundStatus type */
-type RoundStatus = 'GUESSING' | 'END'
+export type RoundStatus = 'GUESSING' | 'END'

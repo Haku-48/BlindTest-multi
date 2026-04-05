@@ -18,7 +18,7 @@ function createPlayer(socketId : string, pseudo : string) : types.Player {
 /* Create a room */
 function createRoom(host : types.Player) : types.Room {
     var roomId : string = roomHelper.roomCodeGenerator();
-    while (rooms.get(roomId)) {
+    while (rooms.has(roomId)) {
         roomId = roomHelper.roomCodeGenerator();
     }
     var newRoom : types.Room = {
@@ -41,14 +41,21 @@ function buildRoom(socket : Socket, pseudo : string) : string {
 }
 
 /* Join a room with the given socket, pseudo and roomId */
-function joinRoom(socket : Socket, pseudo : string, roomId : string) : string {
+/* Add a verification to see if the player is already in the room */
+function joinRoom(socket : Socket, pseudo : string, roomId : string) : string | undefined{
     var room : types.Room | undefined = rooms.get(roomId);
     if (room) {
         if (room.status === 'WAITING') {
-            
+            var player = createPlayer(socket.id, pseudo);
+            room.players.push(player);
+            return room.id;
         }
-
+        return;
     }
+    return;
 }
 
-export = {buildRoom : buildRoom};
+export = {
+    buildRoom : buildRoom,
+    joinRoom : joinRoom
+};

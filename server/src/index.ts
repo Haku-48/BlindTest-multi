@@ -1,9 +1,67 @@
+import roomHandlers = require("./socket/roomHandlers");
+import type {Socket, Server} from 'socket.io';
+
 var express = require('express');
+var debug = require('debug')('Blindtest-multi:server');
+var http = require('http');
+const {IOServer} = require('socket.io');
 
 const app = express();
 
 const PORT = 3000;
 
-app.listen(PORT, () => {
-    console.log(`Running on Port ${PORT}`);
-});
+var server = http.createServer(app);
+
+const io : Server = new IOServer(server);
+
+io.on('connection', (socket : Socket) => {
+    roomHandlers.handleRoomCreation(socket);
+    roomHandlers.handleJoinRoom(socket, io);
+})
+
+server.listen(PORT);
+server.on('error', onError);
+server.on('listening', onListening);
+
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error : any) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof PORT === 'string'
+    ? 'Pipe ' + PORT
+    : 'Port ' + PORT;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
+
+
