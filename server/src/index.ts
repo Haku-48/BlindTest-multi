@@ -1,10 +1,12 @@
 import roomHandlers = require("./socket/roomHandlers");
-import type {Socket, Server} from 'socket.io';
+import type {Socket, Server as IOServer} from 'socket.io';
+
+var FRONTEND_ADDRESS = 'http://localhost:5173';
 
 var express = require('express');
 var debug = require('debug')('Blindtest-multi:server');
 var http = require('http');
-const {IOServer} = require('socket.io');
+const { Server } = require('socket.io');
 
 const app = express();
 
@@ -12,11 +14,15 @@ const PORT = 3000;
 
 var server = http.createServer(app);
 
-const io : Server = new IOServer(server);
+const io : IOServer = new Server(server, {
+  cors : {
+    origin: FRONTEND_ADDRESS,
+  }
+});
 
 io.on('connection', (socket : Socket) => {
     roomHandlers.handleRoomCreation(socket);
-    roomHandlers.handleJoinRoom(socket, io);
+    roomHandlers.handleJoinRoom(socket);
 })
 
 server.listen(PORT);

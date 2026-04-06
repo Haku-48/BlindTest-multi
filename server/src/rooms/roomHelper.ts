@@ -1,3 +1,5 @@
+import type types = require("../types");
+
 /* Options type */
 interface Options {
     includeUpperCase : boolean | null,
@@ -42,5 +44,17 @@ function roomCodeGenerator() : string {
     return code;
 }
 
+/* Get the player with the given socketId in the given room */
+function getPlayerBySocketId(id : string, room : types.Room) : types.Player | undefined {
+    let liste = room.players.filter((p) => p.socketId == id);
+    if (liste.length == 1) {
+        return liste[0];
+    }
+    return ;
+} 
+
 /* Exports */
-export = {roomCodeGenerator : roomCodeGenerator}
+export = {
+    roomCodeGenerator : roomCodeGenerator,
+    getPlayerBySocketId : getPlayerBySocketId
+}

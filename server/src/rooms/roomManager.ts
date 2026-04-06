@@ -1,3 +1,4 @@
+import type Room = require("../types");
 import type types = require("../types");
 import roomHelper = require("./roomHelper");
 import type {Socket} from 'socket.io';
@@ -33,22 +34,22 @@ function createRoom(host : types.Player) : types.Room {
 }
 
 /* Build a room with the given socket and pseudo as host and get the room's code*/
-function buildRoom(socket : Socket, pseudo : string) : string {
+function buildRoom(socket : Socket, pseudo : string) : types.Room {
     var host : types.Player = createPlayer(socket.id, pseudo);
     var room : types.Room = createRoom(host);
     rooms.set(room.id, room);
-    return room.id;
+    return room;
 }
 
 /* Join a room with the given socket, pseudo and roomId */
 /* Add a verification to see if the player is already in the room */
-function joinRoom(socket : Socket, pseudo : string, roomId : string) : string | undefined{
+function joinRoom(socket : Socket, pseudo : string, roomId : string) : types.Room | undefined{
     var room : types.Room | undefined = rooms.get(roomId);
     if (room) {
         if (room.status === 'WAITING') {
             var player = createPlayer(socket.id, pseudo);
             room.players.push(player);
-            return room.id;
+            return room;
         }
         return;
     }

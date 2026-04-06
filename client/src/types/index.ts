@@ -4,10 +4,10 @@
 export interface Room {
     id : string,
     hostId : string,
-    settings : [string],
-    players : [Player],
+    settings : string[],
+    players : Player[],
     status : GameStatus,
-    rounds : [Round] | null
+    rounds : Round[] | null
 }
 
 /* Player type */
@@ -23,7 +23,7 @@ export interface Round {
     videoId : string,
     startSec : number,
     endSec : number,
-    guesses : [Guess],
+    guesses : Guess[],
     status : RoundStatus
 }
 
