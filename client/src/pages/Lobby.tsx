@@ -3,6 +3,7 @@ import { useGameStore } from "../store/useGameStore"
 import type { Player } from "../types";
 import {socket} from '../socket/socket';
 import PlayerList from "../component/lobby/PlayerList";
+import ShareLink from "../component/lobby/ShareLink";
 
 function Lobby() {
     
@@ -36,8 +37,7 @@ function Lobby() {
 
                 {store.room &&(
                     <div className="lb-code">
-                        <span>{store!.room.id}</span>
-                        {/*<ShareLink />*/}
+                        <ShareLink />
                     </div>
                 )}
 
