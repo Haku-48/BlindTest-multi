@@ -6,9 +6,9 @@ import roomHelper = require('../rooms/roomHelper');
 function handleRoomCreation(socket : Socket) {
     socket.on('createRoom', (hostPseudo, callback) => {
         if (hostPseudo && hostPseudo.length > 2) {
-            var room = roomManager.buildRoom(socket, hostPseudo);
-            socket.join(room.id);
-            callback({success: true, room});
+            var response = roomManager.buildRoom(socket, hostPseudo);
+            socket.join(response.room.id);
+            callback({success: true, room : response.room, player : response.player});
         } else {
             callback({success: false, error: 'Invalid Pseudo'});
         }
@@ -19,12 +19,11 @@ function handleRoomCreation(socket : Socket) {
 function handleJoinRoom(socket : Socket) {
     socket.on('joinRoom', (playerPseudo, roomId, callback) => {
         if (playerPseudo && playerPseudo.length > 2) {
-            var room = roomManager.joinRoom(socket, playerPseudo, roomId);
-            if (room) {
-                const player = roomHelper.getPlayerBySocketId(socket.id, room);
+            var response = roomManager.joinRoom(socket, playerPseudo, roomId);
+            if (response) {
                 socket.join(roomId);
-                socket.to(room.id).emit("playerJoined", player);
-                callback({success: true, room});
+                socket.to(response.room.id).emit("playerJoined", response.player);
+                callback({success: true, room : response.room, player : response.player});
             } else {
                 callback({success: false, error: 'Inexistant or already playing room'})
             }
@@ -34,7 +33,22 @@ function handleJoinRoom(socket : Socket) {
     })
 }
 
+/* Listen the disconnection of a player or the host */
+function handleDisconnection(socket : Socket, io : Server) {
+    socket.on('disconnect', () => {
+        console.log(`${socket.id} disconnected`);
+        const response = roomManager.leaveRoom(socket);
+        if (!response) { return; }
+        io.to(response.room.id).emit("playerLeft", response.player); 
+        if (response.room.hostId === socket.id) {
+            roomManager.deleteRoom(response.room.id);
+            io.to(response.room.id).emit("hostLeft");
+        }
+    })
+}
+
 export = {
     handleRoomCreation : handleRoomCreation,
-    handleJoinRoom : handleJoinRoom
+    handleJoinRoom : handleJoinRoom,
+    handleDisconnection : handleDisconnection
 }

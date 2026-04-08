@@ -23,6 +23,7 @@ const io : IOServer = new Server(server, {
 io.on('connection', (socket : Socket) => {
     roomHandlers.handleRoomCreation(socket);
     roomHandlers.handleJoinRoom(socket);
+    roomHandlers.handleDisconnection(socket,io);
 })
 
 server.listen(PORT);
