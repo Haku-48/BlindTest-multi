@@ -4,7 +4,7 @@
 export interface Room {
     id : string,
     hostId : string,
-    settings : string[],
+    settings : Settings,
     players : Player[],
     status : GameStatus,
     rounds : Round[] | null
@@ -41,3 +41,13 @@ export interface RequestResponse {
     room : Room,
     player : Player
 }
+
+/* The Room Settings */
+export interface Settings {
+    theme : string,
+    maxPlayer : number,
+    nbRound : number,
+    videoInterval : number,
+    guessTime : number
+}
+

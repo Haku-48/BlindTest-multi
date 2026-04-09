@@ -47,6 +47,7 @@ export interface Settings {
     theme : string,
     maxPlayer : number,
     nbRound : number,
-    videoInterval : number
+    videoInterval : number,
+    guessTime : number
 }
 

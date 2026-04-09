@@ -1,5 +1,6 @@
 import type {Socket, Server} from 'socket.io';
 import roomManager = require('../rooms/roomManager');
+import updateSettings = require('../rooms/roomManager');
 
 /* Listen the creation request from a socket on the server */
 function handleRoomCreation(socket : Socket) {
@@ -46,8 +47,22 @@ function handleDisconnection(socket : Socket, io : Server) {
     })
 }
 
+/* Listen the Update setting */
+function handleUpdateSettings(socket : Socket) {
+    socket.on('updateSettings', (roomId, settings, callback) => {
+        var response = roomManager.updateSettings(socket, settings)
+        if (typeof response !== "string") {
+            callback({success : true});
+            socket.to(roomId).emit('settingsChanged', response);
+        } else {
+            callback({success : false, error : response})
+        }
+    })
+}
+
 export = {
     handleRoomCreation : handleRoomCreation,
     handleJoinRoom : handleJoinRoom,
-    handleDisconnection : handleDisconnection
+    handleDisconnection : handleDisconnection, 
+    handleUpdateSettings : handleUpdateSettings
 }

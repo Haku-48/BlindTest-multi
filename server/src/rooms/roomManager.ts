@@ -1,4 +1,5 @@
 import type Room = require("../types");
+import type Settings = require("../types");
 import type types = require("../types");
 import roomHelper = require("./roomHelper");
 import type {Socket} from 'socket.io';
@@ -17,6 +18,8 @@ const DEFAULT_MAXPLAYER : number = 2;
 const DEFAULT_VIDEOINTERVAL : number = 15;
 /* The nbRound default value */
 const DEFAULT_NBROUND : number = 5;
+/* The guessTime default value */
+const DEFAULT_GUESSTIME : number = 30;
 
 /* Create a player with the given infos */
 function createPlayer(socketId : string, pseudo : string) : types.Player {
@@ -38,7 +41,8 @@ function createRoom(host : types.Player) : types.Room {
         theme : DEFAULT_THEME,
         maxPlayer : DEFAULT_MAXPLAYER,
         videoInterval : DEFAULT_VIDEOINTERVAL,
-        nbRound : DEFAULT_NBROUND
+        nbRound : DEFAULT_NBROUND,
+        guessTime : DEFAULT_GUESSTIME
     };
     var newRoom : types.Room = {
         id : roomId,
@@ -97,9 +101,31 @@ function deleteRoom(roomId: string) : undefined {
     }
 }
 
+/* Update the Room Settings */
+function updateSettings(socket : Socket, settings : types.Settings) : types.Settings | string {
+    const roomId = participant.get(socket.id);
+    if (!roomId) { return "Erreur : Participant inconnue !";}
+    const room = rooms.get(roomId);
+    if (!room) { return "Erreur : Room inconnue !";}
+    if (room.hostId !== socket.id) { return "Erreur : Action réservée à l'hôte !"}
+    const check = checkSettings(settings, room);
+    if (check) { return check;}
+    room.settings = settings;
+    return room.settings;
+}
+
+/* Check the new settings */
+function checkSettings(settings : types.Settings, room : types.Room) : string {
+    if (settings.maxPlayer < room.players.length) {
+        return `Erreur ! Il y a déja ${room.players.length} joueurs, vous ne pouvez pas limiter ce nombre à ${settings.maxPlayer}`
+    }
+    return '';
+}
+
 export = {
     buildRoom : buildRoom,
     joinRoom : joinRoom,
     leaveRoom : leaveRoom,
-    deleteRoom : deleteRoom
+    deleteRoom : deleteRoom,
+    updateSettings : updateSettings,
 };

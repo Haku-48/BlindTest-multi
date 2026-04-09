@@ -23,11 +23,45 @@
     border: 1px solid var(--bt-border);
     border-radius: 14px;
     padding: 1.1rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
 }
 
-.lb-rules {
-    flex: 1;
-    border-style: dashed;
+.lb-rules-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--bt-text);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.lb-rules-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lb-rules-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-size: 0.83rem;
+  color: var(--bt-text-muted);
+  line-height: 1.5;
+}
+
+.lb-rules-point::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--bt-accent-purple);
+  flex-shrink: 0;
+  margin-top: 0.45rem;
 }
 
 .lb-waiting-host {

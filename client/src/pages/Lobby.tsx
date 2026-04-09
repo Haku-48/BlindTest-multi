@@ -6,6 +6,7 @@ import PlayerList from "../component/lobby/PlayerList";
 import ShareLink from "../component/lobby/ShareLink";
 import '../style/Lobby.css';
 import { useNavigate, useParams } from "react-router-dom";
+import SettingsPanel from "../component/lobby/SettingsPanel";
 
 function Lobby() {
 
@@ -38,6 +39,13 @@ function Lobby() {
         })
     }
 
+    function handleSettingsChanged() {
+        socket.on('settingsChanged', (settings) => {
+            console.log('settingsChanged');
+            store.setRoom((prev) => ({...prev, settings : settings}));
+        })
+    }
+
     useEffect(() => {
         if (!store.player) {
             if (params.roomId) {
@@ -48,11 +56,13 @@ function Lobby() {
         handlePlayerJoined();
         handlePlayerLeft();
         handleHostLeft();
+        handleSettingsChanged();
 
         return () => {
             socket.off('playerJoined');
             socket.off('playerLeft');
             socket.off('hostLeft');
+            socket.off('settingsChanged');
         }
     }, [])
 
@@ -77,7 +87,7 @@ function Lobby() {
 
                 {(store.room && store.room.hostId === socket.id) ? (
                     <div className="lb-settings">
-                        {/*<SettingsPanel />*/}
+                        <SettingsPanel />
                     </div>
                 ) : (
                     <p className="lb-waiting-host">
@@ -85,7 +95,24 @@ function Lobby() {
                     </p>
                 )}
                 <div className="lb-rules">
-                    {/* Ajouter les règles du jeu ici */}
+                    <h1 className="lb-rules-title">Proposez vos extraits, puis devinez ceux des autres !</h1>
+                    <ul className="lb-rules-list">
+                        <li className="lb-rules-point">
+                            Chaque joueur propose des extraits (via lien Youtube)
+                        </li>
+                        <li className="lb-rules-point">
+                            Devinez ce que c'est + un bonus 
+                        </li>
+                        <li className="lb-rules-point">
+                            1 point par bonne réponse (+1 si bonus trouvé)
+                        </li>
+                        <li className="lb-rules-point">
+                            Pas de seconde chance, réponse définitive !
+                        </li>
+                        <li className="lb-rules-point">
+                            Nous verrons à la fin qui est le meilleur !
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div className="lb-player-list">

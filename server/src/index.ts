@@ -24,11 +24,13 @@ io.on('connection', (socket : Socket) => {
     roomHandlers.handleRoomCreation(socket);
     roomHandlers.handleJoinRoom(socket);
     roomHandlers.handleDisconnection(socket,io);
+    roomHandlers.handleUpdateSettings(socket);
 })
 
 server.listen(PORT);
 server.on('error', onError);
 server.on('listening', onListening);
+
 
 
 /**

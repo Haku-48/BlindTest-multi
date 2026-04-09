@@ -10,7 +10,7 @@ function PlayerList() {
             {store.room && (
                 <div>
                     <p className="pl-number">
-                        Nombre de joueurs : <span>{store.room.players.length}</span>
+                        Nombre de joueurs : <span>{store.room.players.length}/{store.room.settings.maxPlayer}</span>
                     </p>
             
                     <ul className="pl-list">
