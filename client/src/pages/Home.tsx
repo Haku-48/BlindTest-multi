@@ -6,19 +6,19 @@ import '../style/Home.css';
 
 function Home() {
 
-    const [pseudo, setPseudo] = useState<string>('');
-    const [code, setCode] = useState<string>('');
-    const [creating, setCreating] = useState<boolean>(false);
-    const [joining, setJoining] = useState<boolean>(false);
-    const [error, setError] = useState<string>('');
-
     let navigate = useNavigate();
 
     let store = useGameStore();
 
+    const [pseudo, setPseudo] = useState<string>('');
+    const [creating, setCreating] = useState<boolean>(false);
+    const [joining, setJoining] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
+
     function callback(body : any) {
         if (body.success) {
-            store.setPseudo(pseudo);
+            console.log(body.player);
+            store.setPlayer(body.player);
             store.setRoom(body.room);
             navigate(`/room/${body.room.id}`);
         } else {
@@ -35,7 +35,7 @@ function Home() {
 
     function handleJoining() {
         setJoining(true);
-        socket.emit('joinRoom', pseudo, code, callback);
+        socket.emit('joinRoom', pseudo, store.roomId, callback);
     }
 
     return (
@@ -83,8 +83,8 @@ function Home() {
                         id="code"
                         type="text" 
                         className="hm-code-input"
-                        value={code}
-                        onChange={(e) => setCode(e.target.value)}
+                        value={store.roomId}
+                        onChange={(e) => store.setRoomId(e.target.value)}
                         autoFocus
                         maxLength={6} 
                     />
@@ -92,7 +92,7 @@ function Home() {
                         className="hm-btn-primary"
                         type="button"
                         onClick={handleJoining}
-                        disabled={joining || !(pseudo.trim() && code.trim())}
+                        disabled={joining || !(pseudo.trim() && store.roomId.trim())}
                     >
                         {joining ? (
                             <span className="hm-btn-loading">

@@ -1,19 +1,24 @@
 import { create } from "zustand";
-import type { Room } from "../types";
+import type { Room, Player } from "../types";
 
 /* The GameState to store */
 type GameState = {
-    room : Room | null
-    pseudo : string | null,
+    room : Room | null,
+    player : Player | null
+    roomId : string,
 
     setRoom: (room : Room | ((prev : Room) => Room)) => void,
-    setPseudo: (pseudo: string) => void,
+    setPlayer: (player : Player | ((prev : Player) => Player)) => void,
+    setRoomId: (roomId : string) => void,
+
+    reset : () => void
 }
 
 /* Game informations storage */
 export const useGameStore = create<GameState>((set) => ({
     room: null,
-    pseudo: null,
+    player : null,
+    roomId: "",
 
     setRoom: (room) => 
         set((state) => ({
@@ -22,5 +27,18 @@ export const useGameStore = create<GameState>((set) => ({
                     ? room(state.room as Room)
                     : room
         })),
-    setPseudo: (pseudo) => set({pseudo}),
+    setPlayer: (player) =>
+        set((state) => ({
+            player : 
+                typeof player === "function"
+                    ? player(state.player as Player)
+                    : player
+        })),
+    setRoomId: (roomId) => set({roomId}),
+    
+    reset: () => set({
+        room: null,
+        player: null,
+        roomId: ""
+    })
 }))

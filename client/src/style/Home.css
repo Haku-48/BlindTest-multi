@@ -1,14 +1,15 @@
 /* === HOMEPAGE BLINDTEST === */
 
 .hm-root {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-body);
     display: flex;
     flex-direction: column;
     gap: 2rem;
     align-items: center;
     padding: 2rem 1rem;
     min-height: 100vh;
-    background: #12121f;
+    background: var(--bg);
+    overflow: hidden;
 }
 
 .hm-pseudo {
@@ -21,20 +22,20 @@
 .hm-pseudo-text {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #e2e0ff;
+    color: var(--text);
     text-align: center;
     letter-spacing: 0.02em;
 }
 
-.hm-pseudo-span { color: #a78bfa; }
+.hm-pseudo-span { color: var(--accent); }
 
 .hm-pseudo-input {
     width: 100%;
     max-width: 260px;
-    background: #1e1b3a;
-    border: 1.5px solid #4c3d8a;
+    background: var(--accent-bg);
+    border: 1.5px solid var(--bt-border);
     border-radius: 12px;
-    color: #e2e0ff;
+    color: var(--text);
     font-size: 1rem;
     font-family: inherit;
     padding: 0.65rem 1rem;
@@ -43,10 +44,10 @@
     transition: border-color 0.2s;
 }
 .hm-pseudo-input:focus {
-    border-color: #a78bfa;
-    box-shadow: 0 0 0 3px rgba(167,139,250,0.2);
+    border-color: var(--accent-border);
+    box-shadow: var(--shadow);
 }
-.hm-pseudo-input::placeholder { color: #6b5fa0; }
+.hm-pseudo-input::placeholder { color: var(--bt-text-placeholder); }
 
 .hm-actions {
     display: flex;
@@ -57,8 +58,8 @@
 }
 
 .hm-create, .hm-join {
-    background: #1a1730;
-    border: 1px solid #2e2558;
+    background: var(--bt-bg-card);
+    border: 1px solid var(--bt-border);
     border-radius: 16px;
     padding: 1.2rem 1.4rem;
     display: flex;
@@ -71,16 +72,16 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #7c6db5;
+    color: var(--bt-text-muted);
 }
 
 .hm-code-input {
-    background: #12121f;
-    border: 1.5px solid #2e2558;
+    background: var(--bt-bg-code);
+    border: 1.5px solid var(--bt-border);
     border-radius: 10px;
     color: #e2e0ff;
     font-size: 1.3rem;
-    font-family: 'Courier New', monospace;
+    font-family: var(--font-input);
     font-weight: 700;
     padding: 0.5rem 1rem;
     letter-spacing: 0.3em;
@@ -91,17 +92,17 @@
     transition: border-color 0.2s;
 }
 .hm-code-input:focus {
-    border-color: #ec4899;
-    box-shadow: 0 0 0 3px rgba(236,72,153,0.15);
+    border-color: var(--bt-accent-pink);
+    box-shadow: 0 0 0 3px var(--bt-focus-pink);
 }
-.hm-code-input::placeholder { color: #3d3060; }
+.hm-code-input::placeholder { color: var(--bt-text-placeholder-code); }
 
 .hm-btn-primary {
     width: 100%;
     padding: 0.75rem 1rem;
     border: none;
     border-radius: 12px;
-    background: linear-gradient(135deg, #7c3aed, #ec4899);
+    background: var(--bt-btn-gradient);
     color: #fff;
     font-size: 0.95rem;
     font-family: inherit;
@@ -123,7 +124,7 @@
 
 .hm-spinner {
     width: 14px; height: 14px;
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid var(--spiner-border);
     border-top-color: #fff;
     border-radius: 50%;
     animation: spin 0.7s linear infinite;
@@ -132,11 +133,11 @@
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .hm-error {
-    color: #f87171;
+    color: var(--bt-error-text);
     font-size: 0.85rem;
     text-align: center;
-    background: rgba(248,113,113,0.08);
-    border: 1px solid rgba(248,113,113,0.2);
+    background: var(--bt-error-bg);
+    border: 1px solid var(--bt-error-border);
     border-radius: 8px;
     padding: 0.5rem 1rem;
     margin: 0;

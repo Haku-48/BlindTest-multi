@@ -35,3 +35,9 @@ export type GameStatus = 'WAITING' | 'CHOOSING' | 'PLAYING' | 'CORRECTION' | 'EN
 
 /* RoundStatus type */
 export type RoundStatus = 'GUESSING' | 'END'
+
+/* The request responses */
+export interface RequestResponse {
+    room : Room,
+    player : Player
+}
