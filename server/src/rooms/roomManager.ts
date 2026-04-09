@@ -8,6 +8,16 @@ var rooms : Map<string, types.Room> = new Map();
 /* The participant map (playerId,roomId) */
 var participant : Map<string, string> = new Map();
 
+/** SETTINGS DEFAULT */
+/* The theme default value */
+const DEFAULT_THEME : string = "Aucun";
+/* The maxPlayer default value */
+const DEFAULT_MAXPLAYER : number = 2;
+/* The videoInterval default value */
+const DEFAULT_VIDEOINTERVAL : number = 15;
+/* The nbRound default value */
+const DEFAULT_NBROUND : number = 5;
+
 /* Create a player with the given infos */
 function createPlayer(socketId : string, pseudo : string) : types.Player {
     var player : types.Player = {
@@ -24,10 +34,16 @@ function createRoom(host : types.Player) : types.Room {
     while (rooms.has(roomId)) {
         roomId = roomHelper.roomCodeGenerator();
     }
+    var settings : types.Settings = {
+        theme : DEFAULT_THEME,
+        maxPlayer : DEFAULT_MAXPLAYER,
+        videoInterval : DEFAULT_VIDEOINTERVAL,
+        nbRound : DEFAULT_NBROUND
+    };
     var newRoom : types.Room = {
         id : roomId,
         hostId : host.socketId,
-        settings : [''],
+        settings : settings,
         players : [host],
         status : 'WAITING',
         rounds : null
@@ -46,10 +62,11 @@ function buildRoom(socket : Socket, pseudo : string) : types.RequestResponse {
 
 /* Join a room with the given socket, pseudo and roomId */
 /* Add a verification to see if the player is already in the room */
-function joinRoom(socket : Socket, pseudo : string, roomId : string) : types.RequestResponse | undefined{
+function joinRoom(socket : Socket, pseudo : string, roomId : string) : types.RequestResponse | string{
     var room : types.Room | undefined = rooms.get(roomId);
-    if (!room) { return; }
-    if (room.status !== 'WAITING') { return;}
+    if (!room) { return "Cette room n'existe pas !"; }
+    if (room.players.length === room.settings.maxPlayer) {return "Cette room est déja pleine !"}
+    if (room.status !== 'WAITING') { return "Cette room est déja en jeu !";}
     var player = createPlayer(socket.id, pseudo);
     room.players.push(player);
     participant.set(socket.id, room.id);

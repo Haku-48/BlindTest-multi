@@ -1,6 +1,5 @@
 import type {Socket, Server} from 'socket.io';
 import roomManager = require('../rooms/roomManager');
-import roomHelper = require('../rooms/roomHelper');
 
 /* Listen the creation request from a socket on the server */
 function handleRoomCreation(socket : Socket) {
@@ -20,15 +19,15 @@ function handleJoinRoom(socket : Socket) {
     socket.on('joinRoom', (playerPseudo, roomId, callback) => {
         if (playerPseudo && playerPseudo.length > 2) {
             var response = roomManager.joinRoom(socket, playerPseudo, roomId);
-            if (response) {
+            if (typeof response !== "string") {
                 socket.join(roomId);
                 socket.to(response.room.id).emit("playerJoined", response.player);
                 callback({success: true, room : response.room, player : response.player});
             } else {
-                callback({success: false, error: 'Inexistant or already playing room'})
+                callback({success: false, error: response})
             }
         } else {
-            callback({success: false, error: 'Invalid pseudo'})
+            callback({success: false, error: 'Pseudo invalid !'})
         }
     })
 }
