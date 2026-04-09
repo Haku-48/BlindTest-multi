@@ -108,6 +108,25 @@
     font-size: 1.6rem;
 }
 
+.lb-rules-btn {
+  background: transparent;
+  border: 1.5px solid var(--bt-border-input);
+  border-radius: 10px;
+  color: var(--bt-accent-purple);
+  font-size: 0.8rem;
+  font-family: inherit;
+  font-weight: 600;
+  padding: 0.45rem 1rem;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.lb-rules-btn:hover {
+  border-color: var(--bt-accent-purple);
+  background: rgba(167, 139, 250, 0.08);
+}
+
 @keyframes bt-pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }

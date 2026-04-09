@@ -36,7 +36,6 @@ function handleJoinRoom(socket : Socket) {
 /* Listen the disconnection of a player or the host */
 function handleDisconnection(socket : Socket, io : Server) {
     socket.on('disconnect', () => {
-        console.log(`${socket.id} disconnected`);
         const response = roomManager.leaveRoom(socket);
         if (!response) { return; }
         io.to(response.room.id).emit("playerLeft", response.player); 

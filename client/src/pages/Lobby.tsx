@@ -5,8 +5,10 @@ import {socket} from '../socket/socket';
 import PlayerList from "../component/lobby/PlayerList";
 import ShareLink from "../component/lobby/ShareLink";
 import '../style/Lobby.css';
+import '../style/Rules.css';
 import { useNavigate, useParams } from "react-router-dom";
 import SettingsPanel from "../component/lobby/SettingsPanel";
+import Rules from "../component/lobby/Rules";
 
 function Lobby() {
 
@@ -15,6 +17,7 @@ function Lobby() {
     let store = useGameStore();
     const [warning, setWarning] = useState<string>('');
     const [countDown, setCountDown] = useState<number>(1);
+    const [rulesOpen, setRulesOpen] = useState<boolean>(false);
 
     function handlePlayerJoined() {
         socket.on('playerJoined', (player : Player) => {
@@ -113,6 +116,7 @@ function Lobby() {
                             Nous verrons à la fin qui est le meilleur !
                         </li>
                     </ul>
+                    <button className="lb-rules-btn" onClick={() => setRulesOpen(true)}>En savoir plus</button>
                 </div>
             </div>
             <div className="lb-player-list">
@@ -122,6 +126,15 @@ function Lobby() {
             {warning && (
                 <div className="lb-warning">
                     {warning} Redirection dans <span className="lb-warning-countdown">{countDown}</span>
+                </div>
+            )}
+
+            {rulesOpen && (
+                <div className="r-overlay" onClick={() => setRulesOpen(false)}>
+                    <div onClick={(e) => e.stopPropagation()}>
+                        <button className="r-close" onClick={() => setRulesOpen(false)}>✕</button>
+                        <Rules />
+                    </div>
                 </div>
             )}
         </main>
