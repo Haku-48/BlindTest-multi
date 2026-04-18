@@ -10,6 +10,8 @@ var rooms : Map<string, types.Room> = new Map();
 var participant : Map<string, string> = new Map();
 /* The timers (roomId, timer)*/
 var timers : Map<string, ReturnType<typeof setTimeout>> = new Map(); 
+/* Ready players (roomId,Set(playerId)) */
+var readyPlayers : Map<string,Set<string>> = new Map();
 
 /** SETTINGS DEFAULT */
 /* The theme default value */
@@ -55,7 +57,7 @@ function createRoom(host : types.Player) : types.Room {
         settings : settings,
         players : [host],
         status : 'WAITING',
-        rounds : null,
+        rounds : [],
     }
     return newRoom; 
 }
@@ -104,6 +106,8 @@ function deleteRoom(roomId: string) : undefined {
             participant.delete(key);
         }
     }
+    timers.delete(roomId);
+    readyPlayers.delete(roomId);
 }
 
 /* Update the Room Settings */
@@ -146,11 +150,65 @@ function checkAndStartGame(socket : Socket, io : Server,  roomId : string) : typ
     return room;
 } 
 
+/* Chek the condition to create a Round and create it */
+function checkAndCreateRound(socket : Socket, roomId : string, videoLink : string, start : number, end : number, answer : string, bonus : string) : string | undefined {
+    const room = rooms.get(roomId);
+    if (!room) {return "Erreur : Vous n'appartenez à aucune Room !";}
+    const duration = end - start;
+    if (duration !== room.settings.videoInterval) { return `Erreur : La durée de votre extrait ne respecte pas les règles ! Durée demandée : ${room.settings.videoInterval} secondes`;}
+    if (answer === bonus) {return 'Erreur : La réponse bonus ne peut pas être identique à la réponse principale';}
+    const round : types.Round = {
+        submitterId : socket.id,
+        videoId : videoLink,
+        startSec : start,
+        endSec : end,
+        mainAnswer : answer,
+        bonusAnswer : bonus,
+        guesses : []
+    }
+    room.rounds.push(round);
+    return ;
+}
+
+/* Put a player ready, return the ready player number if it succeed, else an error message */
+function putAReadyPlayer(socket : Socket, roomId : string) : number | string {
+    const room = rooms.get(roomId);
+    if (!room ) { return "Erreur : Vous n'appartenez à aucune Room !";}
+    const roundsSubmit = room.rounds.filter((round) => round.submitterId === socket.id).length;
+    if (roundsSubmit !== room.settings.nbRound) {return "Erreur : Vous n'avez pas proposé tous vos extraits !"}
+    let readys = readyPlayers.get(roomId);
+    if (!readys) {
+        readyPlayers.set(roomId, new Set());
+        readys = readyPlayers.get(roomId);
+    }
+    if (!readys) { return "Erreur : Impossible de vous identifier comme prêt !"}
+    if (readys.has(socket.id)) { return "Erreur : Vous apparaissez déja comme prêt !";}
+    readys.add(socket.id);
+    return readys.size;
+}
+
+/* Check the Ready players number to end the preparation time */
+function checkReadyPlayers(nb : number, roomId : string) : types.Room | undefined {
+    const room = rooms.get(roomId);
+    if (!room) { return;}
+    if (nb === room.players.length) {
+        room.status = 'PLAYING';
+        roomHelper.randomizeRounds(room);
+        clearTimeout(timers.get(roomId));
+        readyPlayers.delete(roomId);
+        return room;
+    }
+    return;
+}
+
 export = {
     buildRoom : buildRoom,
     joinRoom : joinRoom,
     leaveRoom : leaveRoom,
     deleteRoom : deleteRoom,
     updateSettings : updateSettings,
-    checkAndStartGame : checkAndStartGame
+    checkAndStartGame : checkAndStartGame,
+    checkAndCreateRound : checkAndCreateRound,
+    putAReadyPlayer : putAReadyPlayer,
+    checkReadyPlayers : checkReadyPlayers
 };

@@ -85,5 +85,6 @@ function randomizeRounds(room : types.Room) {
 /* Exports */
 export = {
     roomCodeGenerator : roomCodeGenerator,
-    getPlayerBySocketId : getPlayerBySocketId
+    getPlayerBySocketId : getPlayerBySocketId,
+    randomizeRounds : randomizeRounds
 }

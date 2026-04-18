@@ -1,6 +1,7 @@
 import type {Socket, Server} from 'socket.io';
 import roomManager = require('../rooms/roomManager');
 import updateSettings = require('../rooms/roomManager');
+import checkReadyPlayers = require('../rooms/roomManager');
 
 /* Listen the creation request from a socket on the server */
 function handleRoomCreation(socket : Socket) {
@@ -72,10 +73,39 @@ function handleStartGame(socket : Socket, io : Server) {
     })
 }
 
+/* Listen the extract submission */
+function handleSubmitExtract(socket : Socket) {
+    socket.on('submitExtract', (roomId, videoLink, start, end, answer, bonus, callback) => {
+        var response = roomManager.checkAndCreateRound(socket, roomId, videoLink, start, end, answer, bonus);
+        if (response) {
+            callback({success : false, error : response});
+        } else {
+            callback({success : true});
+        }
+    })
+}
+
+/* Listen the ready players */
+function handlePlayerReady(socket : Socket, io : Server) {
+    socket.on('readyPlayer', (roomId, callback) => {
+        var response = roomManager.putAReadyPlayer(socket, roomId);
+        if (typeof response === 'string') {
+            callback({success : false, error : response})
+        } else {
+            callback({success : true});
+            const room = roomManager.checkReadyPlayers(response, roomId);
+            if (room) {
+                io.to(roomId).emit('preparationEnded', room);
+            }
+        }
+    })
+}
+
 export = {
     handleRoomCreation : handleRoomCreation,
     handleJoinRoom : handleJoinRoom,
     handleDisconnection : handleDisconnection, 
     handleUpdateSettings : handleUpdateSettings,
-    handleStartGame : handleStartGame
+    handleStartGame : handleStartGame,
+    handleSubmitExtract : handleSubmitExtract
 }

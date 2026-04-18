@@ -7,7 +7,7 @@ export interface Room {
     settings : Settings,
     players : Player[],
     status : GameStatus,
-    rounds : Round[] | null,
+    rounds : Round[],
 }
 
 /* Player type */
@@ -26,7 +26,6 @@ export interface Round {
     mainAnswer : string,
     bonusAnswer : string,
     guesses : Guess[],
-    status : RoundStatus
 }
 
 /* Guess type */

@@ -49,8 +49,7 @@ function Rules() {
                     <li className="r-rule-item">Les extraits sont joués un par un, dans un ordre aléatoire</li>
                     <li className="r-rule-item">Tous les joueurs écoutent en même temps</li>
                     <li className="r-rule-item">Chaque joueur propose une réponse</li>
-                    <li className="r-rule-item">Une réponse envoyée est <span>définitive</span></li>
-                    <li className="r-rule-item">Impossible de modifier ou renvoyer une réponse</li>
+                    <li className="r-rule-item">La réponse est envoyée à la fin du temps <span>imparti</span></li>
                 </ul>
             </div>
 
