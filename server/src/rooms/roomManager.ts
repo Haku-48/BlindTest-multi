@@ -134,6 +134,7 @@ function checkAndStartGame(socket : Socket, io : Server,  roomId : string) : typ
     const room = rooms.get(roomId);
     if (!room) {return "Erreur : Room inconnue !";}
     if (room.hostId !== socket.id) {return "Erreur : Vous n'êtes pas reconnu comme hôte de la partie !";}
+    if (room.players.length < 2) { return "Erreur : Pas assez de joueurs !"}
     room.status = "CHOOSING";
     var timer = setTimeout(() => {
         if (room.status === "CHOOSING") {

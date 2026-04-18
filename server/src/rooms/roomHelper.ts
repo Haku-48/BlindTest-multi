@@ -53,6 +53,35 @@ function getPlayerBySocketId(id : string, room : types.Room) : types.Player | un
     return ;
 } 
 
+/* Randomize the order in a room rounds */
+function randomizeRounds(room : types.Room) {
+    if (!room.rounds) {return;}
+    const grouped = Object.groupBy(room.rounds, round => round.submitterId);
+    const groupedList = Object.values(grouped).filter(
+        (group): group is NonNullable<typeof group> => group !== undefined
+    );
+    groupedList.sort((a, b) => b.length - a.length);
+    let result : types.Round[] = [];
+    while (groupedList.length > 0) {
+        const lastSubmitterId = result.at(-1)?.submitterId;
+        const index = groupedList.findIndex(group => group[0]?.submitterId !== lastSubmitterId);
+        
+        if (index === -1) { return; }
+        
+        const group = groupedList[index];
+        if (!group){ return ;}
+        const round = group.shift()!;
+        result.push(round);
+        
+        if (group.length === 0) {
+            groupedList.splice(index, 1);
+        }
+        
+        groupedList.sort((a, b) => b.length - a.length);
+    }
+    room.rounds = result;
+}
+
 /* Exports */
 export = {
     roomCodeGenerator : roomCodeGenerator,

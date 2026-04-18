@@ -24,6 +24,8 @@ export interface Round {
     videoId : string,
     startSec : number,
     endSec : number,
+    mainAnswer : string,
+    bonusAnswer : string,
     guesses : Guess[],
     status : RoundStatus
 }
