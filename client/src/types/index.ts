@@ -7,7 +7,8 @@ export interface Room {
     settings : Settings,
     players : Player[],
     status : GameStatus,
-    rounds : Round[] | null
+    rounds : Round[] | null,
+    timer : ReturnType<typeof setTimeout> | null
 }
 
 /* Player type */

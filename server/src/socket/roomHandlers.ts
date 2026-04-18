@@ -59,9 +59,23 @@ function handleUpdateSettings(socket : Socket) {
     })
 }
 
+/* Listen the Start of the Game */
+function handleStartGame(socket : Socket, io : Server) {
+    socket.on('startGame', (roomId, callback) => {
+        var response = roomManager.checkAndStartGame(socket, io, roomId);
+        if (typeof response !== "string") {
+            callback({success : true});
+            io.to(roomId).emit('gameStarted', response);
+        } else {
+            callback({success : false, error : response});
+        }
+    })
+}
+
 export = {
     handleRoomCreation : handleRoomCreation,
     handleJoinRoom : handleJoinRoom,
     handleDisconnection : handleDisconnection, 
-    handleUpdateSettings : handleUpdateSettings
+    handleUpdateSettings : handleUpdateSettings,
+    handleStartGame : handleStartGame
 }

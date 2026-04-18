@@ -25,6 +25,7 @@ io.on('connection', (socket : Socket) => {
     roomHandlers.handleJoinRoom(socket);
     roomHandlers.handleDisconnection(socket,io);
     roomHandlers.handleUpdateSettings(socket);
+    roomHandlers.handleStartGame(socket, io);
 })
 
 server.listen(PORT);

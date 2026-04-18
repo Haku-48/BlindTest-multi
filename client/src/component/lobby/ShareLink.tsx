@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useGameStore } from "../../store/useGameStore";
-import '../../style/ShareLink.css';
+import '../../style/lobby/ShareLink.css';
 
 function ShareLink() {
 

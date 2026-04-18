@@ -4,8 +4,8 @@ import type { Player } from "../types";
 import {socket} from '../socket/socket';
 import PlayerList from "../component/lobby/PlayerList";
 import ShareLink from "../component/lobby/ShareLink";
-import '../style/Lobby.css';
-import '../style/Rules.css';
+import '../style/lobby/Lobby.css';
+import '../style/lobby/Rules.css';
 import { useNavigate, useParams } from "react-router-dom";
 import SettingsPanel from "../component/lobby/SettingsPanel";
 import Rules from "../component/lobby/Rules";
@@ -18,6 +18,8 @@ function Lobby() {
     const [warning, setWarning] = useState<string>('');
     const [countDown, setCountDown] = useState<number>(1);
     const [rulesOpen, setRulesOpen] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
+    var interval : ReturnType<typeof setInterval>;
 
     function handlePlayerJoined() {
         socket.on('playerJoined', (player : Player) => {
@@ -36,7 +38,7 @@ function Lobby() {
         socket.on('hostLeft', () => {
             setWarning("L'hôte est parti...");
             setCountDown(5);
-            setInterval(() => {
+            interval = setInterval(() => {
                 setCountDown((prev) => prev - 1);
             }, 1000);
         })
@@ -44,9 +46,26 @@ function Lobby() {
 
     function handleSettingsChanged() {
         socket.on('settingsChanged', (settings) => {
-            console.log('settingsChanged');
             store.setRoom((prev) => ({...prev, settings : settings}));
         })
+    }
+
+    function handleGameStarted() {
+        socket.on('gameStarted', (room) => {
+            store.setRoom(room);
+            clearInterval(interval);
+            navigate(`/room/${room.id}/preparation`);
+        })
+    }
+
+    function callback(body : any) {
+        if (!body.success) {
+            setError(body.error);
+        }
+    } 
+
+    function startGame() {
+        socket.emit("startGame", store.room?.id, callback);
     }
 
     useEffect(() => {
@@ -60,12 +79,14 @@ function Lobby() {
         handlePlayerLeft();
         handleHostLeft();
         handleSettingsChanged();
+        handleGameStarted();
 
         return () => {
             socket.off('playerJoined');
             socket.off('playerLeft');
             socket.off('hostLeft');
             socket.off('settingsChanged');
+            socket.off('gameStarted');
         }
     }, [])
 
@@ -74,6 +95,7 @@ function Lobby() {
             setWarning("");
             setCountDown(1);
             store.reset();
+            clearInterval(interval);
             navigate('/');
         }
     }, [countDown])
@@ -119,10 +141,24 @@ function Lobby() {
                     <button className="lb-rules-btn" onClick={() => setRulesOpen(true)}>En savoir plus</button>
                 </div>
             </div>
-            <div className="lb-player-list">
-                <PlayerList />
+            <div className="lb-right-col">
+                <div className="lb-player-list">
+                    <PlayerList />
+                </div>
+                {(store.room && store.room.hostId === socket.id) && (
+                    <button 
+                        className="lb-start-game"
+                        onClick={startGame}>
+                            Lancer la partie
+                    </button>
+                )}   
+                {error && (
+                    <div className="lb-error">
+                        {error}
+                    </div>
+                )}
             </div>
-
+            
             {warning && (
                 <div className="lb-warning">
                     {warning} Redirection dans <span className="lb-warning-countdown">{countDown}</span>

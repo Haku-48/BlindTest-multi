@@ -1,0 +1,82 @@
+.pl-root {
+    background: var(--bt-bg-card);
+    border: 1px solid var(--bt-border);
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.pl-number {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--bt-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pl-number span {
+    background: var(--bt-focus-purple);
+    border: 1px solid rgba(167, 139, 250, 0.25);
+    border-radius: 20px;
+    padding: 2px 10px;
+    color: var(--bt-accent-purple);
+}
+
+.pl-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.pl-pitem {
+    background: var(--bg);
+    border: 1px solid var(--bt-border);
+    border-radius: 10px;
+    padding: 0.55rem 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pl-pseudo {
+    font-size: 0.88rem;
+    color: var(--text);
+    flex: 1;
+    margin: 0;
+}
+
+.pl-pitem-host {
+    border-color: var(--bt-accent-violet);
+}
+
+.pl-pitem-mine {
+    border-color: var(--bt-accent-pink);
+}
+
+.pl-sticker {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 6px;
+    padding: 2px 7px;
+    flex-shrink: 0;
+}
+
+.pl-sticker-mine {
+    color: var(--bt-accent-purple);
+    background: rgba(236,72,153,0.1);
+}
+
+.pl-sticker-host {
+    color: var(--bt-accent-purple);
+    background: rgba(124,58,237,0.15);
+}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useGameStore } from "../../store/useGameStore"
 import { socket } from "../../socket/socket";
-import '../../style/SettingsPanel.css';
+import '../../style/lobby/SettingsPanel.css';
 
 function SettingsPanel() {
 

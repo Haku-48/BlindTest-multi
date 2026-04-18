@@ -2,12 +2,14 @@ import type Room = require("../types");
 import type Settings = require("../types");
 import type types = require("../types");
 import roomHelper = require("./roomHelper");
-import type {Socket} from 'socket.io';
+import type {Socket, Server} from 'socket.io';
 
 /* The rooms map */
 var rooms : Map<string, types.Room> = new Map();
 /* The participant map (playerId,roomId) */
 var participant : Map<string, string> = new Map();
+/* The timers (roomId, timer)*/
+var timers : Map<string, ReturnType<typeof setTimeout>> = new Map(); 
 
 /** SETTINGS DEFAULT */
 /* The theme default value */
@@ -20,6 +22,9 @@ const DEFAULT_VIDEOINTERVAL : number = 15;
 const DEFAULT_NBROUND : number = 5;
 /* The guessTime default value */
 const DEFAULT_GUESSTIME : number = 30;
+
+/* Choosing time per round allowed (2 minutes) */
+const CHOOSING_TIME_PER_ROUND : number = 120000;
 
 /* Create a player with the given infos */
 function createPlayer(socketId : string, pseudo : string) : types.Player {
@@ -50,7 +55,7 @@ function createRoom(host : types.Player) : types.Room {
         settings : settings,
         players : [host],
         status : 'WAITING',
-        rounds : null
+        rounds : null,
     }
     return newRoom; 
 }
@@ -107,6 +112,7 @@ function updateSettings(socket : Socket, settings : types.Settings) : types.Sett
     if (!roomId) { return "Erreur : Participant inconnue !";}
     const room = rooms.get(roomId);
     if (!room) { return "Erreur : Room inconnue !";}
+    if (room.status !== "WAITING") { return "Erreur : Impossible de changer les paramètres dans la phase actuelle du jeu !";}
     if (room.hostId !== socket.id) { return "Erreur : Action réservée à l'hôte !"}
     const check = checkSettings(settings, room);
     if (check) { return check;}
@@ -122,10 +128,28 @@ function checkSettings(settings : types.Settings, room : types.Room) : string {
     return '';
 }
 
+
+/* Check the conditions to start a game and start it if ok */
+function checkAndStartGame(socket : Socket, io : Server,  roomId : string) : types.Room | string {
+    const room = rooms.get(roomId);
+    if (!room) {return "Erreur : Room inconnue !";}
+    if (room.hostId !== socket.id) {return "Erreur : Vous n'êtes pas reconnu comme hôte de la partie !";}
+    room.status = "CHOOSING";
+    var timer = setTimeout(() => {
+        if (room.status === "CHOOSING") {
+            room.status = "PLAYING";
+            io.to(roomId).emit("preparationEnded");
+        }
+    }, (CHOOSING_TIME_PER_ROUND * room.settings.nbRound));
+    timers.set(room.id, timer);
+    return room;
+} 
+
 export = {
     buildRoom : buildRoom,
     joinRoom : joinRoom,
     leaveRoom : leaveRoom,
     deleteRoom : deleteRoom,
     updateSettings : updateSettings,
+    checkAndStartGame : checkAndStartGame
 };

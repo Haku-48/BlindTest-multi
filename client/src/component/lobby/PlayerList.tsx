@@ -1,6 +1,6 @@
 import { useGameStore } from "../../store/useGameStore";
 import {socket} from '../../socket/socket';
-import '../../style/PlayerList.css';
+import '../../style/lobby/PlayerList.css';
 
 function PlayerList() {
     let store = useGameStore();

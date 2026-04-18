@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import {socket} from '../socket/socket';
 import { useGameStore } from "../store/useGameStore";
-import '../style/Home.css';
+import '../style/home/Home.css';
 
 function Home() {
 
