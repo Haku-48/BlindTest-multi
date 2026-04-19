@@ -8,3 +8,7 @@ Je me suis grandement inspiré du code présent [ici](https://www.equinode.com/f
 * Nombre de manches -> [3~10]
 * Intervalle des videos -> [2s~15s]
 * nombre max de joueurs -> [2~10]
+
+
+Utilisation de lucide-react
+Utillisation de react-youtube

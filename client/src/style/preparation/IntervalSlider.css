@@ -1,0 +1,77 @@
+.is-root {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.is-timeline {
+  position: relative;
+  height: 36px;
+  background: var(--bt-bg);
+  border: 1px solid var(--bt-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.is-timeline-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: rgba(167, 139, 250, 0.2);
+  border-left: 2px solid var(--bt-accent-purple);
+  border-right: 2px solid var(--bt-accent-purple);
+  pointer-events: none;
+  transition: left 0.1s;
+}
+
+.is-timeline-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  margin: 0;
+}
+
+.is-btns {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.is-btn {
+  flex: 1;
+  padding: 0.55rem 0.8rem;
+  border-radius: 10px;
+  font-size: 0.83rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.is-btn:active { transform: scale(0.97); }
+
+.is-start-btn {
+  background: var(--bt-success-bg);
+  border: 1.5px solid var(--bt-success-border);
+  color: var(--bt-success);
+}
+
+.is-start-btn:hover { background: rgba(74, 222, 128, 0.18); }
+
+.is-stop-btn {
+  background: var(--bt-danger-bg);
+  border: 1.5px solid var(--bt-danger-border);
+  color: var(--bt-danger);
+}
+
+.is-stop-btn:hover { background: rgba(248, 113, 113, 0.18); }
+
+
+
+
+
+
+
+

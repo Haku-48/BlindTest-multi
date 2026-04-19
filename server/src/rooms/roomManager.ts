@@ -1,5 +1,6 @@
 import type Room = require("../types");
 import type Settings = require("../types");
+import type Round = require("../types");
 import type types = require("../types");
 import roomHelper = require("./roomHelper");
 import type {Socket, Server} from 'socket.io';
@@ -26,7 +27,7 @@ const DEFAULT_NBROUND : number = 5;
 const DEFAULT_GUESSTIME : number = 30;
 
 /* Choosing time per round allowed (2 minutes) */
-const CHOOSING_TIME_PER_ROUND : number = 120000;
+const CHOOSING_TIME_PER_ROUND : number = 180000;
 
 /* Create a player with the given infos */
 function createPlayer(socketId : string, pseudo : string) : types.Player {
@@ -143,7 +144,7 @@ function checkAndStartGame(socket : Socket, io : Server,  roomId : string) : typ
     var timer = setTimeout(() => {
         if (room.status === "CHOOSING") {
             room.status = "PLAYING";
-            io.to(roomId).emit("preparationEnded");
+            io.to(roomId).emit("preparationEnded", room);
         }
     }, (CHOOSING_TIME_PER_ROUND * room.settings.nbRound));
     timers.set(room.id, timer);
@@ -151,7 +152,7 @@ function checkAndStartGame(socket : Socket, io : Server,  roomId : string) : typ
 } 
 
 /* Chek the condition to create a Round and create it */
-function checkAndCreateRound(socket : Socket, roomId : string, videoLink : string, start : number, end : number, answer : string, bonus : string) : string | undefined {
+function checkAndCreateRound(socket : Socket, roomId : string, videoLink : string, start : number, end : number, answer : string, bonus : string) : string | types.Round {
     const room = rooms.get(roomId);
     if (!room) {return "Erreur : Vous n'appartenez à aucune Room !";}
     const duration = end - start;
@@ -167,7 +168,7 @@ function checkAndCreateRound(socket : Socket, roomId : string, videoLink : strin
         guesses : []
     }
     room.rounds.push(round);
-    return ;
+    return round;
 }
 
 /* Put a player ready, return the ready player number if it succeed, else an error message */

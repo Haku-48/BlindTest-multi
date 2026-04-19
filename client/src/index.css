@@ -18,7 +18,18 @@
   --font-body : 'Poppins', sans-serif;
   --font-input : 'Courier New', monospace;
 
-  /* === BLINDTEST === */
+  /* PREPARATION */
+  --bt-success:        #4ade80;
+  --bt-success-bg:     rgba(74, 222, 128, 0.1);
+  --bt-success-border: rgba(74, 222, 128, 0.25);
+  --bt-info:           #60a5fa;
+  --bt-info-bg:        rgba(96, 165, 250, 0.1);
+  --bt-info-border:    rgba(96, 165, 250, 0.25);
+  --bt-danger:         #f87171;
+  --bt-danger-bg:      rgba(248, 113, 113, 0.1);
+  --bt-danger-border:  rgba(248, 113, 113, 0.25);
+
+  /* BLINDTEST */
   --bt-bg-card:       #1a1730;
   --bt-bg-input:      #1e1b3a;
   --bt-bg-code:       #12121f;
@@ -53,3 +64,24 @@ body {
   background-color: var(--bg);
 }
 
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  15%       { transform: scale(1.25); }
+  30%       { transform: scale(1); }
+  45%       { transform: scale(1.15); }
+  60%       { transform: scale(1); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+  0%, 90%, 100% { transform: translateX(0); }
+  92%           { transform: translateX(-3px); }
+  94%           { transform: translateX(3px); }
+  96%           { transform: translateX(-3px); }
+  98%           { transform: translateX(3px); }
+}
