@@ -6,6 +6,7 @@ import IntervalSlider from "./IntervalSlider";
 import utilFunction from "../../util/utilFunction";
 import {socket} from '../../socket/socket';
 import '../../style/preparation/ExtractForm.css';
+import VolumeBar from "./VolumeBar";
 
 interface ExtractFormProps {
     slotIndex : number,
@@ -36,6 +37,7 @@ function ExtractForm({slotIndex ,onSubmit} : ExtractFormProps) {
     function handleLoad() {
         const id = extractVideoId(url);
         if (id) {
+            setError('');
             console.log(id);
             setVideoId(id);
         } else {
@@ -56,8 +58,16 @@ function ExtractForm({slotIndex ,onSubmit} : ExtractFormProps) {
     }
 
     function onReady(event : YouTubeEvent) {
+        if (!store.room) return;
+        if (event.target.getDuration() < store.room?.settings.videoInterval) {
+            setError("Erreur ! Votre vidéo est trop courte !");
+            setVideoId('')
+            return;
+        }
+        setError('');
         playerRef.current = event.target;
         setDuration(event.target.getDuration());
+        event.target.setVolume(50);
         setStart(0);
     }
     
@@ -97,6 +107,11 @@ function ExtractForm({slotIndex ,onSubmit} : ExtractFormProps) {
                     }
                   }}
                 />
+            )}
+            {videoId && (
+                <div className="ef-volume-bar">
+                    <VolumeBar playerRef={playerRef.current} horizontal={true}/>
+                </div>
             )}
             {videoId && (
                 <div className="ef-interval">

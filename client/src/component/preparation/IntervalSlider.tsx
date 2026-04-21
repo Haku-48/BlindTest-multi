@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import '../../style/preparation/IntervalSlider.css';
-import type YouTube from "react-youtube";
 
 interface IntervalSliderProps {
     start : number,

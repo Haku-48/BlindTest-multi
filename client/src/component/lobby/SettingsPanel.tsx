@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useGameStore } from "../../store/useGameStore"
 import { socket } from "../../socket/socket";
 import '../../style/lobby/SettingsPanel.css';
+import utilFunction from "../../util/utilFunction";
 
 function SettingsPanel() {
 
@@ -93,7 +94,7 @@ function SettingsPanel() {
                         type="range" 
                         className="sp-videoInterval-input" 
                         min={2}
-                        max={15}
+                        max={30}
                         value={store.room?.settings.videoInterval}
                         onChange={(e) => {
                             store.setRoom((prev) => ({...prev, settings : {...prev.settings, videoInterval : Number(e.target.value)}}));
@@ -113,7 +114,8 @@ function SettingsPanel() {
                         type="range" 
                         className="sp-guessTime-input" 
                         min={10}
-                        max={60}
+                        max={180}
+                        step={5}
                         value={store.room?.settings.guessTime}
                         onChange={(e) => {
                             store.setRoom((prev) => ({...prev, settings : {...prev.settings, guessTime : Number(e.target.value)}}));
@@ -121,7 +123,7 @@ function SettingsPanel() {
                             setError('');
                         }}/>
                     <span className="sp-guessTime-value">
-                        {store.room?.settings.guessTime}
+                        {utilFunction.formatSecond(store.room!.settings.guessTime)}
                     </span>
                 </div>
             </div>

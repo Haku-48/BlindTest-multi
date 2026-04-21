@@ -35,6 +35,7 @@
   --bt-bg-code:       #12121f;
 
   --bt-border:        #2e2558;
+  --bt-border-input: #7204a5a6;
 
   --bt-text:          #e2e0ff;
   --bt-text-muted:    #7c6db5;
@@ -84,4 +85,10 @@ body {
   94%           { transform: translateX(3px); }
   96%           { transform: translateX(-3px); }
   98%           { transform: translateX(3px); }
+}
+
+@keyframes searching {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  25%       { transform: translateX(4px); opacity: 0.6; }
+  75%       { transform: translateX(-4px); opacity: 0.6; }
 }

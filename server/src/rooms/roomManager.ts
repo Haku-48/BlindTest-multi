@@ -22,11 +22,11 @@ const DEFAULT_MAXPLAYER : number = 2;
 /* The videoInterval default value */
 const DEFAULT_VIDEOINTERVAL : number = 15;
 /* The nbRound default value */
-const DEFAULT_NBROUND : number = 5;
+const DEFAULT_NBROUND : number = 3;
 /* The guessTime default value */
 const DEFAULT_GUESSTIME : number = 30;
 
-/* Choosing time per round allowed (2 minutes) */
+/* Choosing time per round allowed (3 minutes) */
 const CHOOSING_TIME_PER_ROUND : number = 180000;
 
 /* Create a player with the given infos */
@@ -129,6 +129,9 @@ function updateSettings(socket : Socket, settings : types.Settings) : types.Sett
 function checkSettings(settings : types.Settings, room : types.Room) : string {
     if (settings.maxPlayer < room.players.length) {
         return `Erreur ! Il y a déja ${room.players.length} joueurs, vous ne pouvez pas limiter ce nombre à ${settings.maxPlayer}`
+    }
+    if (settings.guessTime <= settings.videoInterval) {
+        return `Erreur ! Vous ne pouvez pas définir un "Temps pour soumettre un choix" inférieur à la durée des extraits !`;
     }
     return '';
 }

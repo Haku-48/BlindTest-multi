@@ -1,0 +1,81 @@
+/* === READY PLAYER LIST === */
+
+.rpl-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem 1rem;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.rpl-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.rpl-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--bt-bg-card);
+  border: 1px solid var(--bt-border);
+  border-radius: 18px;
+  padding: 2rem 1.5rem;
+  width: 160px;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.rpl-card:has(.rpl-icon-ready) {
+  border-color: var(--bt-success-border);
+  background: var(--bt-success-bg);
+}
+
+.rpl-card:has(.rpl-icon-not-ready) {
+  border-color: var(--bt-border);
+  background: var(--bt-bg-card);
+}
+
+.rpl-icon-ready,
+.rpl-icon-not-ready {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.rpl-icon-ready {
+  color: var(--bt-success);
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+.rpl-icon-not-ready {
+  color: var(--bt-text-muted);
+  animation: searching 2s ease-in-out infinite;
+}
+
+.rpl-card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--bt-text);
+  text-align: center;
+  word-break: break-word;
+}
+
+.rpl-waiting-message {
+  font-size: 0.83rem;
+  color: var(--bt-text-muted);
+  text-align: center;
+  max-width: 420px;
+  line-height: 1.6;
+  padding: 0.8rem 1.2rem;
+  background: var(--bt-bg-card);
+  border: 1px solid var(--bt-border);
+  border-radius: 12px;
+}

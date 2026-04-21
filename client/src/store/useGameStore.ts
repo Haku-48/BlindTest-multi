@@ -6,10 +6,12 @@ type GameState = {
     room : Room | null,
     player : Player | null
     roomId : string,
+    readyPlayers : string[],
 
     setRoom: (room : Room | ((prev : Room) => Room)) => void,
     setPlayer: (player : Player | ((prev : Player) => Player)) => void,
     setRoomId: (roomId : string) => void,
+    setReadyPlayer: (readyPlayers : string[] | ((prev : string[]) => string[])) => void,
 
     reset : () => void
 }
@@ -19,6 +21,7 @@ export const useGameStore = create<GameState>((set) => ({
     room: null,
     player : null,
     roomId: "",
+    readyPlayers: [],
 
     setRoom: (room) => 
         set((state) => ({
@@ -35,6 +38,13 @@ export const useGameStore = create<GameState>((set) => ({
                     : player
         })),
     setRoomId: (roomId) => set({roomId}),
+    setReadyPlayer : (readyPlayers) =>
+        set((state) => ({
+            readyPlayers :
+                typeof readyPlayers === "function"
+                    ? readyPlayers(state.readyPlayers as string[])
+                    : readyPlayers
+        })),
     
     reset: () => set({
         room: null,

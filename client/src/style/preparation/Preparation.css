@@ -179,5 +179,37 @@
   color: var(--bt-success);
   font-size: 1.4rem;
   font-weight: 700;
-  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+.pr-warning {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1a1a1a;
+    border: 2px solid #e74c3c;
+    border-radius: 12px;
+    padding: 32px 48px;
+    text-align: center;
+    font-size: 1.4rem;
+    color: #ffffff;
+    z-index: 1000;
+    box-shadow: 0 0 40px rgba(231, 76, 60, 0.4);
+}
+
+.pr-warning-countdown {
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+
+.pr-error {
+  margin-top: 20px;;
+  color: var(--bt-error-text);
+  font-size: 0.83rem;
+  text-align: center;
+  background: var(--bt-error-bg);
+  border: 1px solid var(--bt-error-border);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
 }
