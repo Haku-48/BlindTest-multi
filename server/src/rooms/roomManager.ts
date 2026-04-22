@@ -206,6 +206,46 @@ function checkReadyPlayers(nb : number, roomId : string) : types.Room | undefine
     return;
 }
 
+/* Check a guess and save it in the actual round */
+function checkAndSaveGuess(socket : Socket, roomId : string, mainAnswer : string, bonusAnswer : string) : types.Guess | string {
+    const room = rooms.get(roomId);
+    if (!room) {return "Erreur : Vous n'appartenez à aucune Room !";}
+    const actualRound = room.rounds[room.currentRoundIndex];
+    if (!actualRound) { return "Erreur : Aucun round en cours !";}
+    if (actualRound.guesses.filter(g => g.playerId === socket.id).length > 0) {return "Erreur : Vous avez déjà soumis votre choix !";}
+    const guess : types.Guess = {
+        playerId : socket.id,
+        mainAnswer : mainAnswer,
+        bonusAnswer : bonusAnswer
+    }
+    actualRound.guesses.push(guess);
+    return guess;
+}
+
+/* Check if the actual round is over */
+function checkToFinishTheActualRound(roomId : string) : boolean {
+    const room = rooms.get(roomId);
+    if (!room) {return false;}
+    const actualRound = room.rounds[room.currentRoundIndex];
+    if (!actualRound) { return false;}
+    if (actualRound.guesses.length < room.players.length) { return false;};
+    actualRound.guesses.sort((a,b) => {
+        const indexA = room.players.findIndex(p => p.socketId === a.playerId);
+        const indexB = room.players.findIndex(p => p.socketId === b.playerId);
+        return indexA - indexB;
+    })
+    room.currentRoundIndex++;
+    return true; 
+}
+
+/* Check if the game is over */
+function checkGameEnd(roomId : string) : types.Room | undefined{
+    const room = rooms.get(roomId);
+    if (!room) {return;}
+    if (room.currentRoundIndex >= room.settings.nbRound) {return};
+    return room;
+}
+
 export = {
     buildRoom : buildRoom,
     joinRoom : joinRoom,
@@ -215,5 +255,8 @@ export = {
     checkAndStartGame : checkAndStartGame,
     checkAndCreateRound : checkAndCreateRound,
     putAReadyPlayer : putAReadyPlayer,
-    checkReadyPlayers : checkReadyPlayers
+    checkReadyPlayers : checkReadyPlayers,
+    checkAndSaveGuess : checkAndSaveGuess,
+    checkToFinishTheActualRound : checkToFinishTheActualRound,
+    checkGameEnd : checkGameEnd
 };

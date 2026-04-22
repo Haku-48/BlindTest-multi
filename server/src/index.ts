@@ -1,3 +1,4 @@
+import preparationHandlers = require("./socket/preparationHandlers");
 import roomHandlers = require("./socket/roomHandlers");
 import type {Socket, Server as IOServer} from 'socket.io';
 
@@ -26,8 +27,8 @@ io.on('connection', (socket : Socket) => {
     roomHandlers.handleDisconnection(socket,io);
     roomHandlers.handleUpdateSettings(socket);
     roomHandlers.handleStartGame(socket, io);
-    roomHandlers.handleSubmitExtract(socket);
-    roomHandlers.handlePlayerReady(socket, io);
+    preparationHandlers.handleSubmitExtract(socket);
+    preparationHandlers.handlePlayerReady(socket, io);
 })
 
 server.listen(PORT);

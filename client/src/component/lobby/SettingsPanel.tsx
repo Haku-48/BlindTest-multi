@@ -114,7 +114,7 @@ function SettingsPanel() {
                         type="range" 
                         className="sp-guessTime-input" 
                         min={10}
-                        max={180}
+                        max={60}
                         step={5}
                         value={store.room?.settings.guessTime}
                         onChange={(e) => {
