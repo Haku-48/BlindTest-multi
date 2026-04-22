@@ -3,6 +3,7 @@ import { Route, Routes} from 'react-router-dom'
 import Home from './pages/Home'
 import Lobby from './pages/Lobby'
 import Preparation from './pages/Preparation'
+import Game from './pages/Game'
 /*import Game from './pages/Game'*/
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
       {/* Preparation page */}
       <Route path="/room/:roomId/preparation" element={<Preparation />} />
       {/* Game page */}
-      {/*<Route path="/room/:roomId/game" element={<Game />} />*/}
+      <Route path="/room/:roomId/game" element={<Game />} />
     </Routes>
   )
 }
