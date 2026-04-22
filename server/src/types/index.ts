@@ -8,6 +8,7 @@ export interface Room {
     players : Player[],
     status : GameStatus,
     rounds : Round[],
+    currentRoundIndex : number;
 }
 
 /* Player type */
@@ -29,7 +30,11 @@ export interface Round {
 }
 
 /* Guess type */
-export type Guess = [Player, string];
+export interface Guess{
+    playerId : string,
+    mainAnswer : string,
+    bonusAnswer : string
+} 
 
 /* GameStatus type */
 export type GameStatus = 'WAITING' | 'CHOOSING' | 'PLAYING' | 'CORRECTION' | 'END';

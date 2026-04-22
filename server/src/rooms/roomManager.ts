@@ -59,6 +59,7 @@ function createRoom(host : types.Player) : types.Room {
         players : [host],
         status : 'WAITING',
         rounds : [],
+        currentRoundIndex : 0
     }
     return newRoom; 
 }

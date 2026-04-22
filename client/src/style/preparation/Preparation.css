@@ -11,6 +11,22 @@
   padding: 2rem 1rem;
 }
 
+.pr-theme {
+  margin-top: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  letter-spacing: 0.02em;
+  display :flex; 
+  align-items: center;
+  justify-content: center;
+}
+
+.pr-theme span {
+  color: var(--accent);
+}
+
 .pr-not-ready {
   display: flex;
   flex-direction: column;

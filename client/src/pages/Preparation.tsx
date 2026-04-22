@@ -140,7 +140,11 @@ function Preparation() {
                     style={{width: `${(timer / totalTime) * 100}%`}}/>
                 </div>
                 <span className="pr-timer-value">{utilFunction.formatSecond(timer)}</span>
+                <div className="pr-theme">
+                    Thème:  <span>{store.room?.settings.theme}</span>
+                </div>
             </div>
+            
             {!ready ? (
                 <div className="pr-not-ready">
                     <div className="pr-props">
