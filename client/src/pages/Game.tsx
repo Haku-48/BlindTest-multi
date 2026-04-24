@@ -7,6 +7,7 @@ import GameCountdown from "../component/game/GameCountdown";
 import GameRoundIntro from "../component/game/GameRoundIntro";
 import GamePlaying from "../component/game/GamePlaying";
 import GameEnded from "../component/game/GameEnded";
+import "../style/game/Game.css";
 
 function Game() {
 
@@ -174,7 +175,7 @@ function Game() {
             submitAnswers();
             clearInterval(intervalRef.current);
         }
-        const fill = document.querySelector('.pr-timer-fill') as HTMLElement;
+        const fill = document.querySelector('.gp-timer-fill') as HTMLElement;
         if (!fill) {return};
         const percentage = timer / totalTime;
         const hue = Math.round(percentage * 120);

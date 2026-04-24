@@ -1,0 +1,19 @@
+.gc-root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  z-index: 50;
+}
+
+.gc-text {
+  font-size: var(--bt-text-giant);
+  font-weight: 700;
+  color: var(--bt-text);
+  text-align: center;
+  line-height: 1.1;
+  padding: 0 1rem;
+  animation: heartbeat 1s ease-in-out infinite;
+}

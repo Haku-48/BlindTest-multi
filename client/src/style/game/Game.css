@@ -1,0 +1,32 @@
+.gm-root {
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: var(--font-body);
+}
+
+.gm-error,
+.gm-warning {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  font-size: 0.85rem;
+  text-align: center;
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  white-space: nowrap;
+}
+
+.gm-error {
+  color: var(--bt-error-text);
+  background: var(--bt-error-bg);
+  border: 1px solid var(--bt-error-border);
+}
+
+.gm-warning {
+  color: #fbbf24;
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}

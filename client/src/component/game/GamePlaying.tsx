@@ -1,5 +1,7 @@
 import utilFunction from "../../util/utilFunction"
 import VolumeBar from "../preparation/VolumeBar"
+import "../../style/game/GamePlaying.css";
+import { useGameStore } from "../../store/useGameStore";
 
 interface GamePlayingProps {
     timer : number,
@@ -21,6 +23,9 @@ function GamePlaying({
     autoRestart, setAutoRestart, playerRef,
     playClip
 } : GamePlayingProps) {
+
+    const store = useGameStore();
+
     return (
         <main className="gp-root">
             <div className="gp-timer">
@@ -43,7 +48,7 @@ function GamePlaying({
                         <input 
                             type="checkbox"
                             className="gp-input-autoRestart"
-                            value={autoRestart ? 1 : 0}
+                            checked={autoRestart}
                             onChange={(e) => setAutoRestart(e.target.checked)}
                         />
                         <span className="gp-text-autoRestart">
@@ -62,14 +67,20 @@ function GamePlaying({
                             onChange={(e) => {setMainAnswer(e.target.value)}}
                         />
                         <span className="gp-bonus-text">
-                            Réponse bonus (+1 point) :
+                            {store.room?.rounds[store.room.currentRoundIndex].bonusAnswer ? (
+                                <p>Réponse bonus (+1 point) :</p>
+                            ) : (
+                                <p>Pas de réponse bonus dans ce round</p>
+                            )}
                         </span>
-                        <input 
-                            type="text"
-                            className="gp-bonus-input"
-                            value={bonusAnswer}
-                            onChange={(e) => {setBonusAnswer(e.target.value)}}
-                        />
+                        {store.room?.rounds[store.room.currentRoundIndex].bonusAnswer && (
+                            <input 
+                                type="text"
+                                className="gp-bonus-input"
+                                value={bonusAnswer}
+                                onChange={(e) => {setBonusAnswer(e.target.value)}}
+                            />
+                        )}
                     </div>
                 </div>
                 

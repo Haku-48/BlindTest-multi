@@ -1,3 +1,5 @@
+import "../../style/game/GameCountdown.css";
+
 interface GameCountdownProps {
     firstPhaseText : string
 }

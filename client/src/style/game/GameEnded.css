@@ -1,0 +1,32 @@
+.ge-root {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background: var(--bg);
+  z-index: 50;
+}
+
+.ge-text {
+  font-size: var(--bt-text-giant);
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.1;
+  background: var(--bt-btn-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+.ge-randomsentence {
+  font-size: 1rem;
+  color: var(--bt-text-muted);
+  text-align: center;
+  max-width: 480px;
+  line-height: 1.6;
+  padding: 0 1rem;
+}

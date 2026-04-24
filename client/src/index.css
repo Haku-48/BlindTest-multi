@@ -57,7 +57,8 @@
 
   --spiner-border : rgba(255,255,255,0.3);
 
-  /* ... */
+  --bt-bg-overlay: rgba(8, 6, 13, 0.85);
+  --bt-text-giant: clamp(3rem, 10vw, 7rem);
 }
 
 body {

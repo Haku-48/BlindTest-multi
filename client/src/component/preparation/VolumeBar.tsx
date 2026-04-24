@@ -9,7 +9,7 @@ interface VolumeBarProps {
 
 function VolumeBar({playerRef, horizontal} : VolumeBarProps) {
 
-    const [volume, setVolume] = useState<number>(playerRef?.getVolume() ?? 100);
+    const [volume, setVolume] = useState<number>(playerRef?.getVolume() ?? 50);
 
     function onChange(volume : number) {
         if (!playerRef) return;

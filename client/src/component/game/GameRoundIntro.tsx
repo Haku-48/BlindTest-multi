@@ -1,3 +1,5 @@
+import "../../style/game/GameRoundIntro.css";
+
 interface GameRoundIntroProps {
     currentRoundIndex : number,
     nbRounds : number,

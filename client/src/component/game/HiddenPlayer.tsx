@@ -1,5 +1,6 @@
 import YouTube, { type YouTubeEvent } from "react-youtube"
 import { useGameStore } from "../../store/useGameStore"
+import "../../style/game/HiddenPlayer.css";
 
 interface HiddenPlayerProps {
     playerRef : React.MutableRefObject<YT.Player | null>,
@@ -41,7 +42,7 @@ function HiddenPlayer({playerRef} : HiddenPlayerProps) {
                         playsinline : 1,
                         modestbranding : 1,
                         enablejsapi : 1,
-                        autoplay : 0
+                        autoplay : 0,
                     }
                   }}
                 />

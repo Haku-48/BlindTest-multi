@@ -1,3 +1,5 @@
+import "../../style/game/GameEnded.css";
+
 interface GameEndedProps {
     randomMessage : string
 }
