@@ -242,8 +242,8 @@ function checkToFinishTheActualRound(roomId : string) : boolean {
 function checkGameEnd(roomId : string) : types.Room | undefined{
     const room = rooms.get(roomId);
     if (!room) {return;}
-    if (room.currentRoundIndex >= room.settings.nbRound) {return};
-    return room;
+    if (room.currentRoundIndex >= room.rounds.length) {return room};
+    return;
 }
 
 export = {
