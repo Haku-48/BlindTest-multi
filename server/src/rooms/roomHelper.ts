@@ -82,9 +82,37 @@ function randomizeRounds(room : types.Room) {
     room.rounds = result;
 }
 
+/* Distribution logic */
+function distributionLogic(player : types.Player, guess : types.Guess, round : types.Round) {
+    if (player.socketId === round.submitterId) {
+        if (!guess.mainValid) {player.score--;}
+        if (!guess.bonusValid) {player.score--;}
+    } else {
+        if (guess.mainValid) {player.score++;}
+        if (guess.bonusValid) {player.score++;}
+    }
+}
+
+/* Distribute all of the points */
+function distributePoints(room : types.Room) {
+    if (!room.rounds) {return}
+    room.rounds.forEach(round => {
+        if (round.reports.length < Math.ceil(room.players.length / 2)) {
+            const guesses = round.guesses;
+            guesses.forEach(guess => {
+                const player = room.players.filter(p => p.socketId === guess.playerId)[0];
+                if (player) {
+                    distributionLogic(player, guess, round);
+                }
+            })
+        }
+    })
+}
+
 /* Exports */
 export = {
     roomCodeGenerator : roomCodeGenerator,
     getPlayerBySocketId : getPlayerBySocketId,
-    randomizeRounds : randomizeRounds
+    randomizeRounds : randomizeRounds,
+    distributePoints : distributePoints
 }

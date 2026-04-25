@@ -7,11 +7,15 @@ type GameState = {
     player : Player | null
     roomId : string,
     readyPlayers : string[],
+    currentCorrectionRoundIndex : number,
+    currentCorrectionGuessIndex : number,
 
     setRoom: (room : Room | ((prev : Room) => Room)) => void,
     setPlayer: (player : Player | ((prev : Player) => Player)) => void,
     setRoomId: (roomId : string) => void,
     setReadyPlayer: (readyPlayers : string[] | ((prev : string[]) => string[])) => void,
+    setCurrentCorrectionRoundIndex : (currentCorrectionRoundIndex : number) => void,
+    setCurrentCorrectionGuessIndex : (currentCorrectionGuessIndex : number) => void,
 
     reset : () => void
 }
@@ -22,6 +26,8 @@ export const useGameStore = create<GameState>((set) => ({
     player : null,
     roomId: "",
     readyPlayers: [],
+    currentCorrectionRoundIndex : 0,
+    currentCorrectionGuessIndex : 0,
 
     setRoom: (room) => 
         set((state) => ({
@@ -45,6 +51,8 @@ export const useGameStore = create<GameState>((set) => ({
                     ? readyPlayers(state.readyPlayers as string[])
                     : readyPlayers
         })),
+    setCurrentCorrectionRoundIndex : (currentCorrectionRoundIndex) => set({currentCorrectionRoundIndex}),
+    setCurrentCorrectionGuessIndex : (currentCorrectionGuessIndex) => set({currentCorrectionGuessIndex}), 
     
     reset: () => set({
         room: null,

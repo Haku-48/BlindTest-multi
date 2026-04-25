@@ -21,7 +21,7 @@ function HiddenPlayer({playerRef} : HiddenPlayerProps) {
                 event.target.seekTo(currentRound.startSec);
                 event.target.pauseVideo();
             }
-        }, 2000)
+        }, 4000)
     }
 
     return (

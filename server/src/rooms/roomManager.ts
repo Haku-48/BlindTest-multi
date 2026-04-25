@@ -169,7 +169,8 @@ function checkAndCreateRound(socket : Socket, roomId : string, videoLink : strin
         endSec : end,
         mainAnswer : answer,
         bonusAnswer : bonus,
-        guesses : []
+        guesses : [],
+        reports : []
     }
     room.rounds.push(round);
     return round;
@@ -216,7 +217,9 @@ function checkAndSaveGuess(socket : Socket, roomId : string, mainAnswer : string
     const guess : types.Guess = {
         playerId : socket.id,
         mainAnswer : mainAnswer,
-        bonusAnswer : bonusAnswer
+        bonusAnswer : bonusAnswer,
+        mainValid : false,
+        bonusValid : false
     }
     actualRound.guesses.push(guess);
     return guess;
@@ -246,6 +249,47 @@ function checkGameEnd(roomId : string) : types.Room | undefined{
     return;
 }
 
+/* Check if the validation is available */
+function checkValidation(socket : Socket, roomId : string, roundIndex : number, guessIndex : number, isMain : boolean, isValid : boolean) : boolean {
+    const room = rooms.get(roomId);
+    if (!room) {return false}
+    if (socket.id !== room.hostId) {return false}
+    if (!room.rounds[roundIndex] || !room.rounds[roundIndex].guesses[guessIndex]) {return false}
+    const guess = room.rounds[roundIndex].guesses[guessIndex];
+    if (isMain) {
+        guess.mainValid = isValid;
+    } else {
+        guess.bonusValid = isValid;
+    }
+    return true;
+}
+
+/* Check if the round or guess correction ended is valid */
+function checkRoundOrGuessCorrectionEnd(socket : Socket, roomId : string) : boolean {
+    const room = rooms.get(roomId);
+    if (!room) {return false}
+    return room.hostId === socket.id;
+}
+
+/* Check if a round report is correct */
+function checkReport(socket : Socket, roomId : string, roundIndex : number) : string[] | undefined {
+    const room = rooms.get(roomId);
+    if (!room) {return}
+    const round = room.rounds[roundIndex];
+    if (!round || round.reports.filter(id => id === socket.id).length > 0) {return}
+    round.reports.push(socket.id);
+    return round.reports;
+}
+
+/* Check if the correction is over and return the room if so */
+function checkCorrectionEnd(roomId : string, roundIndex : number) : types.Room |undefined {
+    const room = rooms.get(roomId);
+    if (!room) {return}
+    if (roundIndex !== (room.rounds.length - 1)) {return}
+    roomHelper.distributePoints(room);
+    return room;
+}
+
 export = {
     buildRoom : buildRoom,
     joinRoom : joinRoom,
@@ -258,5 +302,9 @@ export = {
     checkReadyPlayers : checkReadyPlayers,
     checkAndSaveGuess : checkAndSaveGuess,
     checkToFinishTheActualRound : checkToFinishTheActualRound,
-    checkGameEnd : checkGameEnd
+    checkGameEnd : checkGameEnd,
+    checkValidation : checkValidation,
+    checkRoundOrGuessCorrectionEnd : checkRoundOrGuessCorrectionEnd,
+    checkReport : checkReport,
+    checkCorrectionEnd : checkCorrectionEnd,
 };

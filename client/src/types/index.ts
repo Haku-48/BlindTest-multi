@@ -27,13 +27,16 @@ export interface Round {
     mainAnswer : string,
     bonusAnswer : string,
     guesses : Guess[],
+    reports : string[]
 }
 
 /* Guess type */
 export interface Guess{
     playerId : string,
     mainAnswer : string,
-    bonusAnswer : string
+    bonusAnswer : string,
+    mainValid : boolean,
+    bonusValid : boolean
 } 
 
 /* GameStatus type */

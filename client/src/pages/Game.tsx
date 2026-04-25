@@ -165,6 +165,7 @@ function Game() {
     useEffect(() => {
         if (phase === 'ended') {
             setTimeout(() => {
+                console.log(store.room);
                 navigate(`/room/${store.room!.id}/correction`)
             }, 5000)
         }
