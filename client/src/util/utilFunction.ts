@@ -1,4 +1,5 @@
 import type { Guess, Round } from "../types";
+import messages from '../assets/data/messages.json';
 
 /* Format a second number in mm:ss */
 function formatSecond(seconds : number) : string {
@@ -24,8 +25,15 @@ function globalLogic(guess : Guess, round : Round, isReported : boolean) : numbe
     return answerLogic(isSubmitter, guess.mainValid, isReported) + (round.bonusAnswer ? answerLogic(isSubmitter, guess.bonusValid, isReported) : 0);
 }
 
+/* Message extraction */
+function randomMessage(category : keyof typeof messages) : string {
+    const list = messages[category];
+    return list[Math.floor(Math.random() * list.length)];
+}
+
 export default {
     formatSecond : formatSecond,
     answerLogic : answerLogic,
-    globalLogic : globalLogic
+    globalLogic : globalLogic,
+    randomMessage : randomMessage
 }

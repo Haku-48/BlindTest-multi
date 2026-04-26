@@ -8,6 +8,7 @@ import GameRoundIntro from "../component/game/GameRoundIntro";
 import GamePlaying from "../component/game/GamePlaying";
 import GameEnded from "../component/game/GameEnded";
 import "../style/game/Game.css";
+import utilFunction from "../util/utilFunction";
 
 function Game() {
 
@@ -39,12 +40,10 @@ function Game() {
 
 
     function startNextRound() {
+        setRandomMessageRound(utilFunction.randomMessage('roundIntro'))
         setPhase('roundIntro');
         setMainAnswer('');
         setBonusAnswer('');
-        /* A Changer */
-        setRandomMessageEnd('');
-        setRandomMessageRound('');
     }
 
     function callback(body : any) {
@@ -98,6 +97,7 @@ function Game() {
     function handleGameEnded() {
         socket.on('gameEnded', (room) => {
             store.setRoom((_) => ({...room}));
+            setRandomMessageEnd(utilFunction.randomMessage('gameEnd'));
             setPhase('ended');
         })
     }
