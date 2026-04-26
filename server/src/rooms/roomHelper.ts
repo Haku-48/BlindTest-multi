@@ -86,10 +86,10 @@ function randomizeRounds(room : types.Room) {
 function distributionLogic(player : types.Player, guess : types.Guess, round : types.Round) {
     if (player.socketId === round.submitterId) {
         if (!guess.mainValid) {player.score--;}
-        if (!guess.bonusValid) {player.score--;}
+        if (round.bonusAnswer && !guess.bonusValid) {player.score--;}
     } else {
         if (guess.mainValid) {player.score++;}
-        if (guess.bonusValid) {player.score++;}
+        if (round.bonusAnswer && guess.bonusValid) {player.score++;}
     }
 }
 

@@ -59,6 +59,29 @@
 
   --bt-bg-overlay: rgba(8, 6, 13, 0.85);
   --bt-text-giant: clamp(3rem, 10vw, 7rem);
+
+  /* Correction */
+  --bt-warning:        #f59e0b;
+  --bt-warning-bg:     rgba(245, 158, 11, 0.1);
+  --bt-warning-border: rgba(245, 158, 11, 0.25);
+  --bt-partial:        #facc15;
+  --bt-partial-bg:     rgba(250, 204, 21, 0.08);
+  --bt-partial-border: rgba(250, 204, 21, 0.2);
+
+  --bg-inner-all : rgba(74, 222, 128, 0.15);
+  --bg-inner-partial : rgba(250, 204, 21, 0.12);
+  --bg-inner-none : rgba(248, 113, 113, 0.12);
+
+  /* Results */
+  --bt-gold:          #fbbf24;
+  --bt-gold-bg:       rgba(251, 191, 36, 0.1);
+  --bt-gold-border:   rgba(251, 191, 36, 0.35);
+  --bt-silver:        #94a3b8;
+  --bt-silver-bg:     rgba(148, 163, 184, 0.1);
+  --bt-silver-border: rgba(148, 163, 184, 0.35);
+  --bt-bronze:        #c2784a;
+  --bt-bronze-bg:     rgba(194, 120, 74, 0.1);
+  --bt-bronze-border: rgba(194, 120, 74, 0.35);
 }
 
 body {

@@ -1,3 +1,4 @@
+import correctionHandlers = require("./socket/correctionHandlers");
 import gameHandlers = require("./socket/gameHandlers");
 import preparationHandlers = require("./socket/preparationHandlers");
 import roomHandlers = require("./socket/roomHandlers");
@@ -31,6 +32,10 @@ io.on('connection', (socket : Socket) => {
     preparationHandlers.handleSubmitExtract(socket);
     preparationHandlers.handlePlayerReady(socket, io);
     gameHandlers.handleSubmitGuess(socket,io);
+    correctionHandlers.handleValidateAnswer(socket,io);
+    correctionHandlers.handleGuessCorrectionEnd(socket,io);
+    correctionHandlers.handleRoundReport(socket, io);
+    correctionHandlers.handleRoundCorrectionEnd(socket, io);
 })
 
 server.listen(PORT);

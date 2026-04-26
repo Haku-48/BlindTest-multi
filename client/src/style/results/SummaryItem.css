@@ -1,0 +1,131 @@
+.si-root {
+  background: var(--bt-bg-card);
+  border: 1px solid var(--bt-border);
+  border-radius: 14px;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.si-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.1rem;
+  cursor: default;
+  flex-wrap: wrap;
+}
+
+.si-round {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--bt-text-muted);
+  flex-shrink: 0;
+}
+
+.si-submitter {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--bt-accent-purple);
+  flex: 1;
+}
+
+.si-reported {
+  font-size: 0.72rem;
+  font-style: italic;
+  color: var(--bt-warning);
+}
+
+.si-score-global {
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.si-score-green  { color: var(--bt-success); }
+.si-score-yellow { color: var(--bt-partial); }
+.si-score-red    { color: var(--bt-danger); }
+
+.si-chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--bt-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.25s ease, color 0.2s;
+}
+
+.si-chevron:hover { color: var(--bt-accent-purple); }
+.si-chevron-down  { transform: rotate(180deg); }
+
+.si-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.8rem 1.1rem;
+  border-top: 1px solid var(--bt-border);
+}
+
+.si-body-mainAnswer,
+.si-body-bonusAnswer {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  padding : 8px;
+  border : 0.5px solid var(--bt-border);
+  border-radius : 4px;
+}
+
+.si-answers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.si-waitedAnswer,
+.si-givenAnswer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.si-answer-text {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--bt-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.si-answer-slot {
+  flex: 1;
+  min-width: 0;
+  background: var(--bt-bg);
+  border: 1px solid var(--bt-border);
+  border-radius: 8px;
+  padding: 0.35rem 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--bt-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.si-answer-score {
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 32px;
+  text-align: right;
+  margin-left: auto;
+}

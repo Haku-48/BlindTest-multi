@@ -1,0 +1,39 @@
+.cp-root {
+  width: 100%;
+  background: var(--bt-bg-card);
+  border: 1px solid var(--bt-border);
+  border-radius: 14px;
+  padding: 1.1rem 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.cp-video-player {
+  width: 100% !important;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--bt-border);
+}
+
+.cp-extract-times {
+  font-size: 0.78rem;
+  font-family: var(--mono);
+  color: var(--bt-text-muted);
+}
+
+.cp-btn {
+  background: var(--bt-success-bg);
+  border: 1.5px solid var(--bt-success-border);
+  border-radius: 10px;
+  color: var(--bt-success);
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 600;
+  padding: 0.55rem 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.cp-btn:hover { background: rgba(74, 222, 128, 0.18); transform: translateY(-1px); }

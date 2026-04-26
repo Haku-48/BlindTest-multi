@@ -45,3 +45,10 @@ function handleRoundCorrectionEnd(socket : Socket, io : Server) {
         }
     })
 }
+
+export = {
+    handleValidateAnswer : handleValidateAnswer,
+    handleGuessCorrectionEnd : handleGuessCorrectionEnd,
+    handleRoundReport : handleRoundReport,
+    handleRoundCorrectionEnd : handleRoundCorrectionEnd
+}

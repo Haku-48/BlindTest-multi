@@ -1,0 +1,57 @@
+.res-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 3rem 1.5rem;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: var(--font-body);
+}
+
+.res-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0;
+  background: var(--bt-btn-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+.res-subtitle {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--bt-text-muted);
+  font-style: italic;
+  text-align: center;
+  max-width: 480px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.res-sentence {
+  font-size: 0.85rem;
+  color: var(--bt-text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.res-btn {
+  padding: 0.8rem 2.5rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--bt-btn-gradient);
+  color: #fff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.res-btn:hover   { opacity: 0.9; transform: translateY(-1px); }
+.res-btn:active  { transform: scale(0.98); }
+.res-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
