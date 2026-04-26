@@ -3,18 +3,20 @@
   background: var(--bt-bg-card);
   border: 1px solid var(--bt-border);
   border-radius: 14px;
-  padding: 1.1rem 1.3rem;
+  padding: 1.1rem 0.3rem;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   align-items: center;
+  justify-content : center;
+  padding-left : 1.2rem;
 }
 
 .cp-video-player {
-  width: 100% !important;
+  width: 100%;
+
   border-radius: 10px;
   overflow: hidden;
-  border: 1px solid var(--bt-border);
 }
 
 .cp-extract-times {

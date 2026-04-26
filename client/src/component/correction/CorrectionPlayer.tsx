@@ -6,9 +6,10 @@ import "../../style/correction/CorrectionPlayer.css";
 
 interface CorrectionPlayerProps {
     playerRef : React.MutableRefObject<YT.Player | null>,
+    setReady : (ready : boolean) => void
 }
 
-function CorrectionPlayer({playerRef} : CorrectionPlayerProps) {
+function CorrectionPlayer({playerRef, setReady} : CorrectionPlayerProps) {
 
     const store = useGameStore();
     const round = store.room!.rounds[store.currentCorrectionRoundIndex];
@@ -23,6 +24,7 @@ function CorrectionPlayer({playerRef} : CorrectionPlayerProps) {
             if (currentRound) {
                 event.target.seekTo(currentRound.startSec);
                 event.target.playVideo();
+                setReady(true);
             }
         }, 500)
     }
@@ -39,8 +41,8 @@ function CorrectionPlayer({playerRef} : CorrectionPlayerProps) {
                     className="cp-video-player"
                     videoId={round.videoId}
                     key={round.videoId + store.currentCorrectionRoundIndex}
-                  onReady={onReady}
-                  opts={{
+                    onReady={onReady}
+                    opts={{
                     height : "300",
                     width : "700",
                     playerVars : {

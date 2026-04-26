@@ -14,7 +14,7 @@ function Results() {
     /* Différentes valeures de phases : "ranking" | "summary" */
     const [phase, setPhase] = useState<string>("ranking");
 
-    const descPlayerList = [...store.room!.players].sort((p1,p2) => 
+    const descPlayerList = [...store.room?.players ?? []].sort((p1,p2) => 
         p1.score !== p2.score 
             ? p2.score - p1.score 
             : p1.pseudo.localeCompare(p2.pseudo)   
@@ -28,7 +28,7 @@ function Results() {
     }
 
     useEffect(() => {
-        if (revealedCount === store.room!.players.length) {
+        if (store.room && revealedCount === store.room!.players.length) {
             if (interval.current) {
                 clearInterval(interval.current);
             }
@@ -42,6 +42,7 @@ function Results() {
     useEffect(() => {
         if (!store.player || !store.room) {
             navigate('/');
+            return;
         }
         interval.current = setInterval(() => {
             setRevealedCount((prev) => prev + 1);

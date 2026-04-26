@@ -17,6 +17,7 @@ function Correction() {
     const [reported, setReported] = useState<boolean>(false);
     const [warning, setWarning] = useState<string>('');
     const [countDown, setCountDown] = useState<number>(1);
+    const [ready, setReady] = useState<boolean>(false);
 
     const playerRef = useRef<YT.Player|null>(null);
     var interval : ReturnType<typeof setInterval>;
@@ -53,6 +54,7 @@ function Correction() {
 
     function handleNextRound() {
         socket.on('nextRound', () => {
+            setReady(false);
             store.setCurrentCorrectionRoundIndex((prev) => prev + 1);
             store.setCurrentCorrectionGuessIndex(0);
             setReported(false);
@@ -135,6 +137,8 @@ function Correction() {
                 store.setRoomId(params.roomId)
             }
             navigate('/');
+        } else {
+            console.log(store.player)
         }
 
         handleAnswerValidated();
@@ -168,9 +172,14 @@ function Correction() {
                 </h2>    
             </div>
             <div className="ct-elem">
+                <div className="ct-left">
+                    <CorrectionPlayer playerRef={playerRef} setReady={setReady}/>
+                    {"" + ready}
+                    {ready && (
+                        <VolumeBar playerRef={playerRef.current} horizontal={true} />
+                    )}
+                </div>
                 <div className="ct-center">
-                    <CorrectionPlayer playerRef={playerRef} />
-                    <VolumeBar playerRef={playerRef.current} horizontal={true} />
                     <GuessReview validAnswer={validAnswer} />
                     <div className="ct-report-zone">
                         <div className="ct-report-info">
