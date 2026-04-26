@@ -48,7 +48,7 @@ function FeedbackPanel() {
         if (response.ok) {
             setSuccess(type === "report" 
                 ? "Merci pour votre signalement ! Nos équipe travaillerons à la résolution de ce problème."
-                : "Merci pour votre proposition ! Nos équipe l'analyserons et seront en tirer parti."
+                : "Merci pour votre proposition ! Nos équipe l'analyserons et sauront en tirer parti."
             )
         } else {
             const error = await response.json();

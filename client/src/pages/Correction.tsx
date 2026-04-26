@@ -174,7 +174,6 @@ function Correction() {
             <div className="ct-elem">
                 <div className="ct-left">
                     <CorrectionPlayer playerRef={playerRef} setReady={setReady}/>
-                    {"" + ready}
                     {ready && (
                         <VolumeBar playerRef={playerRef.current} horizontal={true} />
                     )}
