@@ -1,5 +1,5 @@
 import type {Socket, Server} from 'socket.io';
-import roomManager = require('../rooms/roomManager');
+const roomManager = require('../rooms/roomManager');
 
 
 /* Listen the creation request from a socket on the server */
@@ -74,7 +74,7 @@ function handleStartGame(socket : Socket, io : Server) {
 
 
 
-export = {
+export default {
     handleRoomCreation : handleRoomCreation,
     handleJoinRoom : handleJoinRoom,
     handleDisconnection : handleDisconnection, 

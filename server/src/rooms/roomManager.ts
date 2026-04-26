@@ -1,8 +1,5 @@
-import type Room = require("../types");
-import type Settings = require("../types");
-import type Round = require("../types");
-import type types = require("../types");
-import roomHelper = require("./roomHelper");
+import type * as types from "../types/index.ts";
+const roomHelper = require('./roomHelper');
 import type {Socket, Server} from 'socket.io';
 
 /* The rooms map */
@@ -290,7 +287,7 @@ function checkCorrectionEnd(roomId : string, roundIndex : number) : types.Room |
     return room;
 }
 
-export = {
+export default {
     buildRoom : buildRoom,
     joinRoom : joinRoom,
     leaveRoom : leaveRoom,

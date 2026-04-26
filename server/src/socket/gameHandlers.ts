@@ -1,5 +1,5 @@
 import type {Socket, Server} from 'socket.io';
-import roomManager = require('../rooms/roomManager');
+const roomManager = require('../rooms/roomManager');
 
 /* Listen on submit guess */
 function handleSubmitGuess(socket : Socket, io : Server) {
@@ -21,6 +21,6 @@ function handleSubmitGuess(socket : Socket, io : Server) {
     })
 }
 
-export = {
+export default {
     handleSubmitGuess : handleSubmitGuess
 }

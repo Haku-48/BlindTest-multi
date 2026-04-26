@@ -1,9 +1,9 @@
 require('dotenv').config();
 
-import correctionHandlers = require("./socket/correctionHandlers");
-import gameHandlers = require("./socket/gameHandlers");
-import preparationHandlers = require("./socket/preparationHandlers");
-import roomHandlers = require("./socket/roomHandlers");
+const correctionHandlers = require("./socket/correctionHandlers");
+const gameHandlers = require("./socket/gameHandlers");
+const preparationHandlers = require("./socket/preparationHandlers");
+const roomHandlers = require("./socket/roomHandlers");
 import type {Socket, Server as IOServer} from 'socket.io';
 
 var FRONTEND_ADDRESS = process.env.FRONTEND_ADDRESS;
@@ -23,7 +23,7 @@ app.use(cors({
 }))
 app.use('/feedback', feedbackRouter);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 var server = http.createServer(app);
 

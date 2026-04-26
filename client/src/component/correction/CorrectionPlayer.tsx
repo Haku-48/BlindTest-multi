@@ -31,7 +31,7 @@ function CorrectionPlayer({playerRef, setReady} : CorrectionPlayerProps) {
 
     function getToExtractStart() {
         if (!playerRef.current) return;
-        playerRef.current.seekTo(store.room!.rounds[store.currentCorrectionRoundIndex].startSec);
+        playerRef.current.seekTo(store.room!.rounds[store.currentCorrectionRoundIndex].startSec, true);
     }
 
     return (

@@ -1,5 +1,5 @@
 import type {Socket, Server} from 'socket.io';
-import roomManager = require('../rooms/roomManager');
+const roomManager = require('../rooms/roomManager');
 
 /* Listen the extract submission */
 function handleSubmitExtract(socket : Socket) {
@@ -30,7 +30,7 @@ function handlePlayerReady(socket : Socket, io : Server) {
     })
 }
 
-export = {
+export default {
     handleSubmitExtract : handleSubmitExtract,
     handlePlayerReady : handlePlayerReady
 }

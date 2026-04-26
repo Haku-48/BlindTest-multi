@@ -43,4 +43,6 @@ const feedback = async (req : any, res : any) => {
     }
 }
 
-module.exports.feedback = feedback;
+export default {
+    feedback : feedback
+}

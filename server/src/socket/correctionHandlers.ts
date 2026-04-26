@@ -1,5 +1,5 @@
 import type {Socket, Server} from 'socket.io';
-import roomManager = require('../rooms/roomManager');
+const roomManager = require('../rooms/roomManager');
 
 /* Listen on the answer validation */
 function handleValidateAnswer(socket : Socket, io : Server) {
@@ -46,7 +46,7 @@ function handleRoundCorrectionEnd(socket : Socket, io : Server) {
     })
 }
 
-export = {
+export default {
     handleValidateAnswer : handleValidateAnswer,
     handleGuessCorrectionEnd : handleGuessCorrectionEnd,
     handleRoundReport : handleRoundReport,

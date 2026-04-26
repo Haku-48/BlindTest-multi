@@ -1,4 +1,4 @@
-import type types = require("../types");
+import type * as types from "../types/index.ts";
 
 /* Options type */
 interface Options {
@@ -110,7 +110,7 @@ function distributePoints(room : types.Room) {
 }
 
 /* Exports */
-export = {
+export default {
     roomCodeGenerator : roomCodeGenerator,
     getPlayerBySocketId : getPlayerBySocketId,
     randomizeRounds : randomizeRounds,

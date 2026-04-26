@@ -17,7 +17,7 @@ function IntervalSlider({start, duration, videoInterval, playerRef, onChange} : 
     function playClip() {
         if (!playerRef) return;
 
-        playerRef.seekTo(start);
+        playerRef.seekTo(start, true);
         playerRef.playVideo();
         setPlaying(true);
 
@@ -26,7 +26,7 @@ function IntervalSlider({start, duration, videoInterval, playerRef, onChange} : 
         loopInterval.current = setInterval(() => {
             const currentTime = playerRef.getCurrentTime();
             if (currentTime >= (start + videoInterval)) {
-                playerRef.seekTo(start);
+                playerRef.seekTo(start, true);
             }
         }, 200);
     }

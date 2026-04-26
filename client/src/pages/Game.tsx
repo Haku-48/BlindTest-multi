@@ -40,9 +40,11 @@ function Game() {
 
     function startNextRound() {
         setPhase('roundIntro');
-        // Changer le message random
         setMainAnswer('');
         setBonusAnswer('');
+        /* A Changer */
+        setRandomMessageEnd('');
+        setRandomMessageRound('');
     }
 
     function callback(body : any) {
@@ -58,7 +60,7 @@ function Game() {
     function playClip() {
         const currentRound = store.room?.rounds[store.room?.currentRoundIndex];
         if (!playerRef.current || !currentRound) return;
-        playerRef.current.seekTo(currentRound.startSec);
+        playerRef.current.seekTo(currentRound.startSec, true);
         playerRef.current.playVideo();
     
         if (loopInterval.current) clearInterval(loopInterval.current);
@@ -151,6 +153,7 @@ function Game() {
     useEffect(() => {
         if (phase === 'roundIntro') {
             setTimeout(() => {
+                if (!playerRef.current) return;
                 playerRef.current.pauseVideo();
                 setPhase('playing');
                 setTimer(totalTime);
