@@ -1,17 +1,27 @@
+require('dotenv').config();
+
 import correctionHandlers = require("./socket/correctionHandlers");
 import gameHandlers = require("./socket/gameHandlers");
 import preparationHandlers = require("./socket/preparationHandlers");
 import roomHandlers = require("./socket/roomHandlers");
 import type {Socket, Server as IOServer} from 'socket.io';
 
-var FRONTEND_ADDRESS = 'http://localhost:5173';
+var FRONTEND_ADDRESS = process.env.FRONTEND_ADDRESS;
 
 var express = require('express');
 var debug = require('debug')('Blindtest-multi:server');
 var http = require('http');
 const { Server } = require('socket.io');
 
+var feedbackRouter = require('./routes/feedback.route');
+
 const app = express();
+const cors = require('cors');
+app.use(express.json());
+app.use(cors({
+  origin : FRONTEND_ADDRESS
+}))
+app.use('/feedback', feedbackRouter);
 
 const PORT = 3000;
 
