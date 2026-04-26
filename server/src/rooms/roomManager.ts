@@ -1,5 +1,5 @@
 import type * as types from "../types/index.ts";
-const roomHelper = require('./roomHelper');
+import roomHelper from "./roomHelper.ts";
 import type {Socket, Server} from 'socket.io';
 
 /* The rooms map */

@@ -1,5 +1,5 @@
 import type {Socket, Server} from 'socket.io';
-const roomManager = require('../rooms/roomManager');
+import roomManager from '../rooms/roomManager.ts';
 
 
 /* Listen the creation request from a socket on the server */

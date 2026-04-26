@@ -1,8 +1,8 @@
 import express from 'express';
 const router = express.Router();
 
-const feedbackController = require('../controller/feedback.controller');
+import feedbackController from '../controller/feedback.controller.ts';
 
 router.post('/', feedbackController.feedback);
 
-module.exports = router;
+export default router;

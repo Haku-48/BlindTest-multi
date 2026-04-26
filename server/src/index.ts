@@ -1,22 +1,22 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-const correctionHandlers = require("./socket/correctionHandlers");
-const gameHandlers = require("./socket/gameHandlers");
-const preparationHandlers = require("./socket/preparationHandlers");
-const roomHandlers = require("./socket/roomHandlers");
+import correctionHandlers from "./socket/correctionHandlers.ts";
+import gameHandlers from "./socket/gameHandlers.ts";
+import preparationHandlers from "./socket/preparationHandlers.ts";
+import roomHandlers from "./socket/roomHandlers.ts";
 import type {Socket, Server as IOServer} from 'socket.io';
 
 var FRONTEND_ADDRESS = process.env.FRONTEND_ADDRESS;
 
-var express = require('express');
-var debug = require('debug')('Blindtest-multi:server');
-var http = require('http');
-const { Server } = require('socket.io');
+import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
 
-var feedbackRouter = require('./routes/feedback.route');
+import feedbackRouter from './routes/feedback.route.ts';
 
 const app = express();
-const cors = require('cors');
+import cors from 'cors';
 app.use(express.json());
 app.use(cors({
   origin : FRONTEND_ADDRESS
@@ -50,7 +50,7 @@ io.on('connection', (socket : Socket) => {
 
 server.listen(PORT);
 server.on('error', onError);
-server.on('listening', onListening);
+
 
 
 
@@ -82,16 +82,6 @@ function onError(error : any) {
   }
 }
 
-/**
- * Event listener for HTTP server "listening" event.
- */
 
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
 
 
