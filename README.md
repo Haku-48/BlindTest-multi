@@ -6,24 +6,24 @@ Ce projet est uniquement destiné à un usage entre amis.
 
 ### Installer les dépendance
 Effectuer, dans le repertoire source, la commande :
-```
+```bash
 npm install
 ```
 
 ### Lancer le serveur
 Se placer dans le répertoire *server/* et lancer le serveur via la commande :
-```
+```bash
 npm run start
 ```
 ou 
-```
+```bash
 nodemon
 ```
 si *nodemon* est installé.
 
 ### Lancer le client
 Se placer ensuite dans le répertoire *client/* et effectuer la commande :
-```
+```bash
 npm run dev
 ```
 
