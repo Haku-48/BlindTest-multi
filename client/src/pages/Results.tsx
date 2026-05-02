@@ -18,7 +18,7 @@ function Results() {
         p1.score !== p2.score 
             ? p2.score - p1.score 
             : p1.pseudo.localeCompare(p2.pseudo)   
-    );
+    ).reverse();
 
     var interval = useRef<ReturnType<typeof setInterval> | null>(null);
 
