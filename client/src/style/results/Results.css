@@ -18,7 +18,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: heartbeat 1.6s ease-in-out infinite;
 }
 
 .res-subtitle {
